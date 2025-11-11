@@ -1,6 +1,6 @@
 /**
  * Portfolio Website Stylesheet
- * Author: Ditzz
+ * Author: FebryWesker (Azbry)
  * Description: Modern, clean CSS with smooth animations and transitions
  */
 
@@ -104,7 +104,7 @@ body {
 .testimonial-card:hover {
     transform: perspective(1500px) rotateX(1deg) rotateY(1deg) translateY(-10px) scale(1.05);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 
-                0 0 40px rgba(59, 130, 246, 0.3);
+                0 0 40px rgba(184, 255, 154, 0.3);
 }
 
 /* ============================================ */
@@ -181,7 +181,7 @@ body {
     left: -70%;
     width: 240%;
     height: 240%;
-    background: linear-gradient(75deg, transparent, rgba(96, 165, 250, 0.3), transparent);
+    background: linear-gradient(75deg, transparent, rgba(184, 255, 154, 0.3), transparent);
     transform: rotate(45deg);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
@@ -242,7 +242,7 @@ body {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #60a5fa, #3b82f6, #93c5fd);
+    background: linear-gradient(90deg, #b8ff9a, #94ef89, #d6ffbe);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
@@ -315,13 +315,13 @@ section.show {
     width: 65px;
     height: 65px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b82f6, #93c5fd);
+    background: linear-gradient(135deg, #94ef89, #d6ffbe);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 10px 30px rgba(184, 255, 154, 0.5);
 }
 
 #back-to-top.visible {
@@ -336,7 +336,7 @@ section.show {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: rgba(59, 130, 246, 0.5);
+    background: rgba(184, 255, 154, 0.5);
     animation: pulse-ring 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
@@ -367,7 +367,7 @@ textarea {
 input:focus, 
 textarea:focus {
     transform: translateY(-6px);
-    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 30px rgba(184, 255, 154, 0.4);
     outline: none;
 }
 
@@ -396,9 +396,9 @@ textarea:focus {
 
 .particle {
     position: absolute;
-    background: linear-gradient(45deg, #60a5fa, #bfdbfe);
+    background: linear-gradient(45deg, #b8ff9a, #eaffd3);
     border-radius: 50%;
-    box-shadow: 0 0 20px rgba(96, 165, 250, 0.6);
+    box-shadow: 0 0 20px rgba(184, 255, 154, 0.6);
     animation: float-particle 10s linear infinite;
 }
 
@@ -471,7 +471,7 @@ textarea:focus {
     inset: -10px;
     border-radius: 50%;
     padding: 10px;
-    background: linear-gradient(45deg, #3b82f6, #bfdbfe, #3b82f6);
+    background: linear-gradient(45deg, #94ef89, #eaffd3, #94ef89);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -497,7 +497,7 @@ textarea:focus {
 
 .section-divider {
     height: 4px;
-    background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+    background: linear-gradient(90deg, transparent, #b8ff9a, transparent);
     position: relative;
     overflow: hidden;
 }
@@ -547,7 +547,7 @@ textarea:focus {
 /* ============================================ */
 
 .gradient-text {
-    background: linear-gradient(90deg, #60a5fa, #3b82f6, #93c5fd, #bfdbfe, #60a5fa);
+    background: linear-gradient(90deg, #b8ff9a, #94ef89, #d6ffbe, #eaffd3, #b8ff9a);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -591,4 +591,4 @@ textarea:focus {
     .testimonial-card {
         padding: 1.5rem;
     }
-}
+    }
