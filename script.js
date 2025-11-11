@@ -1,46 +1,36 @@
 /**
  * Portfolio Website JavaScript (Secure Version)
- * Author: Ditzz
+ * Author: FebryWesker (Azbry)
  * Description: Interactive features with security enhancements
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    
+
     // ============================================
     // SECURITY: Input Sanitization Functions
     // ============================================
     
-    /**
-     * Sanitize user input to prevent XSS attacks
-     * @param {string} input - User input string
-     * @returns {string} Sanitized string
-     */
     function sanitizeInput(input) {
         const div = document.createElement('div');
         div.textContent = input;
         return div.innerHTML;
     }
-    
-    /**
-     * Validate email format
-     * @param {string} email - Email address
-     * @returns {boolean} Valid or not
-     */
+
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-    
+
     // ============================================
-    // TYPING EFFECT
+    // TYPING EFFECT (Azbry Edition)
     // ============================================
     const typingPhrases = [
-        "Web Developer",
-        "Backend Enthusiast",
-        "UI/UX Designer",
-        "Tech Innovator",
-        "Creative Coder",
-        "AI Engineer"
+        "Web Game Developer",
+        "WhatsApp Bot Creator",
+        "UI/UX Neon Designer",
+        "Fast & Minimalist Dev",
+        "Azbry Project Owner",
+        "FebryWesker on GitHub"
     ];
     
     let phraseIndex = 0;
@@ -50,10 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function typeEffect() {
         const currentPhrase = typingPhrases[phraseIndex];
         const typingElement = document.getElementById("typing");
-        
         if (!typingElement) return;
-        
-        // Update text based on typing or deleting state
+
         if (isDeleting) {
             typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
             charIndex--;
@@ -61,33 +49,24 @@ document.addEventListener('DOMContentLoaded', function() {
             typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
             charIndex++;
         }
-        
-        // Check if phrase is complete
+
         if (!isDeleting && charIndex === currentPhrase.length) {
-            // Pause before deleting
-            setTimeout(() => {
-                isDeleting = true;
-                typeEffect();
-            }, 2500);
+            setTimeout(() => { isDeleting = true; typeEffect(); }, 2500);
             return;
         }
-        
-        // Check if deletion is complete
+
         if (isDeleting && charIndex === 0) {
             isDeleting = false;
             phraseIndex = (phraseIndex + 1) % typingPhrases.length;
             setTimeout(typeEffect, 700);
             return;
         }
-        
-        // Continue typing/deleting with appropriate speed
-        const speed = isDeleting ? 30 : 100;
+
+        const speed = isDeleting ? 35 : 95;
         setTimeout(typeEffect, speed);
     }
-    
-    // Start typing effect
     typeEffect();
-    
+
     // ============================================
     // FORM VALIDATION & SECURITY
     // ============================================
@@ -95,81 +74,66 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
-            // Get form inputs
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const messageInput = document.getElementById('message');
-            
-            // Sanitize inputs
+
             const sanitizedName = sanitizeInput(nameInput.value.trim());
             const sanitizedEmail = emailInput.value.trim().toLowerCase();
             const sanitizedMessage = sanitizeInput(messageInput.value.trim());
-            
-            // Validate inputs
+
             if (sanitizedName.length < 2) {
                 e.preventDefault();
-                alert('Please enter a valid name (at least 2 characters)');
+                alert('Masukkan nama minimal 2 karakter.');
                 return false;
             }
-            
+
             if (!validateEmail(sanitizedEmail)) {
                 e.preventDefault();
-                alert('Please enter a valid email address');
+                alert('Masukkan alamat email yang valid.');
                 return false;
             }
-            
+
             if (sanitizedMessage.length < 10) {
                 e.preventDefault();
-                alert('Please enter a message (at least 10 characters)');
+                alert('Pesan minimal 10 karakter.');
                 return false;
             }
-            
-            // Update form values with sanitized data
+
             nameInput.value = sanitizedName;
             emailInput.value = sanitizedEmail;
             messageInput.value = sanitizedMessage;
-            
-            // Log form submission (for debugging)
-            console.log('Form submitted successfully');
+
+            console.log('Form submitted successfully (Azbry Portfolio)');
         });
     }
-    
+
     // ============================================
-    // SMOOTH SCROLL FOR NAVIGATION
+    // SMOOTH SCROLL
     // ============================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
-            
             if (targetElement) {
-                const headerOffset = 64; // Navbar height
+                const headerOffset = 64;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
+                window.scrollTo({ top: offsetPosition, behavior: "smooth" });
             }
-            
-            // Close mobile menu after click
+
             const mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenu && mobileMenu.classList.contains('open')) {
                 mobileMenu.classList.remove('open');
-                
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
-                if (mobileMenuButton) {
-                    mobileMenuButton.setAttribute('aria-expanded', 'false');
-                }
+                if (mobileMenuButton) mobileMenuButton.setAttribute('aria-expanded', 'false');
             }
         });
     });
-    
+
     // ============================================
-    // MOBILE MENU TOGGLE
+    // MOBILE MENU
     // ============================================
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -177,22 +141,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileMenuButton && mobileMenu) {
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('open');
-            
             const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
             mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
         });
     }
-    
+
     // ============================================
-    // SCROLL REVEAL FOR SECTIONS
+    // SCROLL REVEAL
     // ============================================
     const sections = document.querySelectorAll('section');
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.2
-    };
-    
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -200,159 +157,110 @@ document.addEventListener('DOMContentLoaded', function() {
                 sectionObserver.unobserve(entry.target);
             }
         });
-    }, observerOptions);
-    
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-    
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => sectionObserver.observe(section));
+
     // ============================================
-    // PARTICLES GENERATOR
+    // PARTICLES
     // ============================================
     const particlesContainer = document.getElementById('particles-container');
-    const numParticles = 20;
-    
     if (particlesContainer) {
-        for (let i = 0; i < numParticles; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            // Random size between 5px and 10px
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.classList.add('particle');
             const size = Math.random() * 5 + 5;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            
-            // Random horizontal position
-            particle.style.left = `${Math.random() * 100}%`;
-            
-            // Random animation duration and delay
-            particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-            particle.style.animationDelay = `-${Math.random() * 10}s`;
-            
-            particlesContainer.appendChild(particle);
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}%`;
+            p.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            p.style.animationDelay = `-${Math.random() * 10}s`;
+            particlesContainer.appendChild(p);
         }
     }
-    
+
     // ============================================
     // BACK TO TOP BUTTON
     // ============================================
     const backToTopButton = document.getElementById('back-to-top');
-    
     if (backToTopButton) {
-        // Show/hide button based on scroll position
         window.addEventListener('scroll', throttle(() => {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
+            backToTopButton.classList.toggle('visible', window.scrollY > 300);
         }, 100));
-        
-        // Scroll to top on click
+
         backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
-    
+
     // ============================================
-    // RIPPLE EFFECT FOR BUTTONS
+    // RIPPLE EFFECT
     // ============================================
     document.querySelectorAll('.glow-button, button').forEach(button => {
         button.addEventListener('click', function(e) {
             const rect = this.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
             ripple.style.left = `${x}px`;
             ripple.style.top = `${y}px`;
             ripple.style.width = '10px';
             ripple.style.height = '10px';
-            
             this.style.position = 'relative';
             this.appendChild(ripple);
-            
-            // Remove ripple after animation
-            setTimeout(() => {
-                ripple.remove();
-            }, 1200);
+            setTimeout(() => ripple.remove(), 1200);
         });
     });
-    
+
     // ============================================
-    // PARALLAX EFFECT FOR HOME BACKGROUND
+    // PARALLAX EFFECT
     // ============================================
     const heroSection = document.querySelector('#home');
     const heroBackground = heroSection ? heroSection.querySelector('img') : null;
-    
     if (heroBackground) {
         window.addEventListener('scroll', throttle(() => {
             const scrollPos = window.scrollY;
-            
-            // Only apply parallax when hero is visible
             if (scrollPos < window.innerHeight) {
                 heroBackground.style.transform = `translateY(${scrollPos * 0.5}px) scale(1.15)`;
             }
-        }, 16)); // ~60fps
+        }, 16));
     }
-    
+
     // ============================================
-    // NAVBAR HIDE/SHOW ON SCROLL
+    // NAVBAR HIDE/SHOW
     // ============================================
     const nav = document.querySelector('nav');
     let lastScroll = 0;
-    const scrollThreshold = 120;
-    
     if (nav) {
         window.addEventListener('scroll', throttle(() => {
             const currentScroll = window.scrollY;
-            
-            // Hide navbar when scrolling down, show when scrolling up
-            if (currentScroll > lastScroll && currentScroll > scrollThreshold) {
-                nav.style.transform = 'translateY(-100%)';
-            } else {
-                nav.style.transform = 'translateY(0)';
-            }
-            
+            nav.style.transform = (currentScroll > lastScroll && currentScroll > 120)
+                ? 'translateY(-100%)' : 'translateY(0)';
             lastScroll = currentScroll;
         }, 100));
     }
-    
+
     // ============================================
-    // PREVENT RIGHT CLICK ON IMAGES (Optional Security)
+    // DISABLE RIGHT-CLICK ON IMAGES
     // ============================================
     document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            return false;
-        });
+        img.addEventListener('contextmenu', e => e.preventDefault());
     });
-    
+
     // ============================================
-    // CONSOLE MESSAGE
+    // CONSOLE MESSAGE (Azbry Version)
     // ============================================
-    console.log('%c🔒 Security Enabled', 'color: #10b981; font-size: 16px; font-weight: bold;');
-    console.log('%c👋 Hello Developer!', 'color: #60a5fa; font-size: 20px; font-weight: bold;');
-    console.log('%cInterested in the code? Check out my GitHub: https://github.com/Always-Ditz', 'color: #93c5fd; font-size: 14px;');
-    console.log('%c💼 Looking for a developer? Let\'s connect!', 'color: #3b82f6; font-size: 14px;');
-    console.log('%c⚠️ Warning: Do not paste unknown code here!', 'color: #ef4444; font-size: 12px; font-weight: bold;');
-    
+    console.log('%c🌐 Azbry Portfolio', 'color:#b8ff9a;font-size:18px;font-weight:bold;');
+    console.log('%c⚡ Developer: FebryWesker', 'color:#a0ffc0;font-size:16px;font-weight:bold;');
+    console.log('%c🧩 Projects: Azbry Minigame & Azbry-MD', 'color:#d0ffbf;font-size:14px;');
+    console.log('%c🔗 GitHub: https://github.com/FebryWesker', 'color:#94ef89;font-size:14px;');
+    console.log('%c⚠️ Warning: Jangan tempel kode asing di sini!', 'color:#ef4444;font-size:12px;font-weight:bold;');
 });
 
 // ============================================
-// UTILITY FUNCTIONS
+// UTILITIES
 // ============================================
-
-/**
- * Throttle function to limit function calls
- * @param {Function} func - Function to throttle
- * @param {number} limit - Time limit in milliseconds
- * @returns {Function} Throttled function
- */
 function throttle(func, limit) {
     let inThrottle;
     return function(...args) {
@@ -364,12 +272,6 @@ function throttle(func, limit) {
     };
 }
 
-/**
- * Debounce function to delay function calls
- * @param {Function} func - Function to debounce
- * @param {number} wait - Wait time in milliseconds
- * @returns {Function} Debounced function
- */
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -383,17 +285,12 @@ function debounce(func, wait) {
 }
 
 // ============================================
-// SECURITY: Prevent Console Tampering
+// SECURITY: Disable DevTools in Production
 // ============================================
 (function() {
-    'use strict';
-    
-    // Disable common developer shortcuts in production
     const isProduction = window.location.hostname !== 'localhost' && 
                         window.location.hostname !== '127.0.0.1';
-    
     if (isProduction) {
-        // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === 'F12' ||
@@ -401,7 +298,7 @@ function debounce(func, wait) {
                 (e.ctrlKey && e.key === 'U')
             ) {
                 e.preventDefault();
-                console.warn('Developer tools are disabled in production mode.');
+                console.warn('Developer tools disabled in production (Azbry Security).');
                 return false;
             }
         });
