@@ -1,1 +1,309 @@
 
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FebryWesker • Azbry Portfolio</title>
+<meta name="theme-color" content="#0b0d10">
+<style>
+/* =========================
+   AZBRY THEME (Neon Dark)
+   ========================= */
+:root{
+  --bg-1:#0b0d10; --bg-2:#101315;
+  --ink:#eaf1e9; --muted:#9fb1c1;
+  --accent:#b8ff9a; --accent2:#94ef89; --ring:rgba(184,255,154,.20);
+  --panel:rgba(255,255,255,.03); --panel-bd:rgba(255,255,255,.08);
+  --rad12:12px; --rad16:16px; --rad20:20px;
+  --shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink);
+  font-family: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  background:
+    radial-gradient(1200px 800px at 20% -10%, rgba(184,255,154,.07), transparent 40%),
+    radial-gradient(900px 600px at 110% 30%, rgba(184,255,154,.05), transparent 35%),
+    linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 100%);
+}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* layout */
+.container{max-width:1100px;margin:0 auto;padding:24px 18px 100px}
+.section{padding:56px 0}
+.section h2{margin:0 0 14px;font-size:clamp(22px,3.8vw,30px);font-weight:900;letter-spacing:.3px}
+.section p.lead{color:var(--muted);margin:0 0 18px}
+
+/* nav */
+nav{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:saturate(1.2) blur(6px);
+  background:linear-gradient(180deg,rgba(11,13,16,.70), rgba(11,13,16,.35));
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.navbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .dot{
+  width:10px;height:10px;border-radius:999px;
+  background:linear-gradient(180deg,var(--accent),var(--accent2));
+  box-shadow:0 0 18px var(--ring);
+}
+.brand b{font-weight:900;letter-spacing:.4px}
+nav .links{display:flex;gap:14px;flex-wrap:wrap}
+nav .links a{
+  padding:8px 12px;border-radius:999px;color:#d0dae3;
+  border:1px solid transparent;transition:.18s ease;background:transparent
+}
+nav .links a:hover{border-color:var(--panel-bd);color:#fff}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding:36px 0 18px}
+@media (max-width:940px){.hero{grid-template-columns:1fr}}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--panel-bd); border-radius:22px; padding:20px;
+  box-shadow: var(--shadow);
+}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 10px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:.25px;
+  color:#dfffe0;background:rgba(184,255,154,.09);border:1px solid var(--ring)
+}
+.title-xl{
+  font-size:clamp(28px,6.2vw,56px);font-weight:900;margin:8px 0 10px;
+  color:var(--accent);text-shadow:0 0 18px var(--ring)
+}
+.subtitle{color:#d0dae3;font-weight:700}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 16px;border-radius:12px;font-weight:800;cursor:pointer;border:0;
+  box-shadow:0 10px 30px rgba(184,255,154,.25);
+  background:linear-gradient(180deg,var(--accent),var(--accent2)); color:#0b0d10;
+}
+.btn.ghost{
+  background:transparent;color:#eaf1e9;border:1px solid var(--panel-bd);box-shadow:none
+}
+.kbd{background:rgba(255,255,255,.08);border:1px solid var(--panel-bd);padding:2px 6px;border-radius:6px;font-weight:800}
+
+/* about */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.project{grid-column:span 6}
+@media (max-width:860px){.project{grid-column:span 12}}
+.project h3{margin:6px 0 8px}
+.project p{color:var(--muted);margin:0 0 12px}
+.project .card{transition:transform .18s ease, box-shadow .18s ease}
+.project .card:hover{transform:translateY(-2px);box-shadow:0 22px 60px rgba(184,255,154,.16)}
+
+/* skills */
+.tags{display:flex;flex-wrap:wrap;gap:10px}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#cfead0;
+  background:rgba(184,255,154,.08);border:1px solid var(--panel-bd)
+}
+
+/* contact */
+.contact-card .row{display:flex;gap:12px;align-items:center;margin:6px 0}
+.contact-card .row a{color:#eaf1e9}
+.footer{
+  margin-top:28px;color:#b8c0cc;font-size:13px;display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;opacity:.85
+}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(10px);animation:reveal .7s ease forwards}
+.reveal.d2{animation-delay:.08s}.reveal.d3{animation-delay:.16s}.reveal.d4{animation-delay:.24s}
+@keyframes reveal{to{opacity:1;transform:none}}
+
+/* typewriter (halus) */
+.typer{display:inline-block;position:relative}
+.typer::after{
+  content:'';position:absolute;right:-6px;top:50%;width:2px;height:1.1em;background:#d0dae3;transform:translateY(-50%);
+  animation:blink 1s steps(1) infinite
+}
+@keyframes blink{50%{opacity:0}}
+</style>
+</head>
+<body>
+  <nav>
+    <div class="container navbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <b>Azbry • FebryWesker</b>
+      </div>
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="home" class="container hero">
+    <div class="card reveal">
+      <span class="badge">NEON DARK • AZBRY</span>
+      <h1 class="title-xl">FebryWesker</h1>
+      <p class="subtitle">
+        <span class="typer" id="typer">Developer • Azbry Minigames • WhatsApp Bot</span>
+      </p>
+      <p class="lead">Bikin <b>web game</b> dan <b>WhatsApp Bot (Azbry-MD)</b> — simpel, cepat, tema neon hijau khas Azbry.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="https://azbryminigamess.vercel.app/" target="_blank" rel="noopener">🎮 Azbry Minigame</a>
+        <a class="btn ghost" href="https://github.com/FebryWesker" target="_blank" rel="noopener">🤖 Azbry-MD Bot (GitHub)</a>
+      </div>
+      <p style="margin-top:10px;color:#b8c0cc;font-weight:700">Tip: tekan <span class="kbd">G</span> buat scroll ke Projects</p>
+    </div>
+
+    <div class="card reveal d2" style="display:grid;place-items:center;min-height:260px;">
+      <!-- Placeholder grafik/preview -->
+      <svg width="100%" height="200" viewBox="0 0 600 200" fill="none">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b8ff9a"/><stop offset="100%" stop-color="#94ef89"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="20" width="580" height="160" rx="14" fill="url(#g)" opacity=".15" stroke="rgba(184,255,154,.35)"/>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#cfead0" font-family="Inter" font-weight="800" font-size="18">
+          Azbry Neon Preview
+        </text>
+      </svg>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <h2 class="reveal">About</h2>
+      <div class="cols">
+        <div class="card reveal">
+          <p class="lead"><b>Halo, gue FebryWesker.</b> Fokus bikin <b>game web</b> ringan dan <b>WhatsApp Bot</b> yang relevan buat keseharian.
+            Gaya desain: gelap, neon hijau, responsif, dan cepat.</p>
+          <p style="color:#cdd6e3">Portofolio ini ngebuktiin konsistensi tema Azbry di semua proyek — dari UI sampai interaksi.</p>
+        </div>
+        <div class="card reveal d2">
+          <p class="lead">Arah karya:</p>
+          <ul style="margin:8px 0 0 18px;color:#cdd6e3;line-height:1.8">
+            <li>Minigame untuk latihan otak & hiburan cepat</li>
+            <li>Bot WhatsApp (Azbry-MD) dengan fitur game & tools harian</li>
+            <li>UI/UX neon dark yang rapi dan konsisten</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <h2 class="reveal">Projects</h2>
+      <p class="lead reveal d2">Dua jalur utama karya: <b>Web Game</b> & <b>WhatsApp Bot</b>. Klik untuk lihat lebih lanjut.</p>
+      <div class="grid">
+        <article class="project">
+          <div class="card reveal d2">
+            <h3>🎮 Azbry Minigame</h3>
+            <p>Koleksi game: Word Connect, Sudoku, Tap Runner, Tebak Gambar, dan lainnya. Tema Azbry, performa ngebut, siap mobile/desktop.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn" href="https://azbryminigamess.vercel.app/" target="_blank" rel="noopener">Buka Situs Game</a>
+              <a class="btn ghost" href="https://azbryminigamess.vercel.app/" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="card reveal d3">
+            <h3>🤖 Azbry-MD (WhatsApp Bot)</h3>
+            <p>Bot WhatsApp untuk game, utilitas, dan hiburan. Struktur modular, mudah di-deploy, dan aktif dikembangkan.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a class="btn" href="https://github.com/FebryWesker" target="_blank" rel="noopener">GitHub Repo</a>
+              <a class="btn ghost" href="https://github.com/FebryWesker" target="_blank" rel="noopener">Dokumentasi</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <h2 class="reveal">Skills</h2>
+      <div class="card reveal d2">
+        <div class="tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML/CSS</span>
+          <span class="tag">Canvas API</span>
+          <span class="tag">Vercel</span>
+          <span class="tag">Git/GitHub</span>
+          <span class="tag">REST API</span>
+          <span class="tag">Node.js (Bot)</span>
+          <span class="tag">UI/UX Neon Dark</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <h2 class="reveal">Contact</h2>
+      <div class="card contact-card reveal d2">
+        <div class="row"><b>Email:</b> <a href="mailto:febry@azbry.dev">febry@azbry.dev</a></div>
+        <div class="row"><b>GitHub:</b> <a href="https://github.com/FebryWesker" target="_blank" rel="noopener">github.com/FebryWesker</a></div>
+      </div>
+      <div class="footer">
+        <span>© <span id="y"></span> Azbry • FebryWesker</span>
+        <span>Theme: Neon Dark • Azbry-MD</span>
+      </div>
+    </section>
+  </main>
+
+<script>
+/* smooth scroll */
+document.querySelectorAll('nav .links a').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const id = a.getAttribute('href');
+    document.querySelector(id).scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+/* year */
+document.getElementById('y').textContent = new Date().getFullYear();
+
+/* typewriter halus */
+(function(){
+  const el = document.getElementById('typer');
+  const text = "Developer • Azbry Minigames • WhatsApp Bot";
+  let i=0, dir=1;
+  function tick(){
+    i+=dir;
+    if(i>text.length){dir=-1; i=text.length; setTimeout(tick, 1200); return;}
+    if(i<0){dir=1; i=0;}
+    el.textContent = text.slice(0,i);
+    setTimeout(tick, i===text.length?60:36);
+  }
+  tick();
+})();
+
+/* scroll reveal */
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('reveal'); obs.unobserve(e.target); }
+  });
+},{threshold:.12});
+document.querySelectorAll('.section, .card').forEach(n=>{
+  if(!n.classList.contains('reveal')) obs.observe(n);
+});
+
+/* shortcut: G to Projects */
+window.addEventListener('keydown', e=>{
+  if(e.key.toLowerCase()==='g'){
+    document.getElementById('projects').scrollIntoView({behavior:'smooth'});
+  }
+});
+</script>
+</body>
+</html>
