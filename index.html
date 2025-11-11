@@ -105,7 +105,7 @@
       <div class="grid grid-cols-2 gap-4 text-lg font-medium mb-6">  
         <p class="text-green-300">Status: <span class="text-white">Developer</span></p>  
         <p class="text-green-300">Region: <span class="text-white">Indonesia</span></p>  
-        <p class="text-green-300">Email: <span class="text-white">febry@azbry.dev</span></p>  
+        <p class="text-green-300">Email: <span class="text-white">febrywesker@dev.com</span></p>  
       </div>  
 
       <!-- Interests -->  
@@ -277,7 +277,7 @@
 <!-- CONTACT SECTION -->  
 <section id="contact" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
   <h2 class="text-4xl font-extrabold text-center mb-16 reveal-bottom">  
-    Contact <span class="text-green-400">Me</span>  
+    Profile <span class="text-green-400">Github</span>  
   </h2>  
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-10">  
@@ -295,28 +295,168 @@
       </div>  
     </div>  
 
-    <!-- Form -->  
-    <div class="testimonial-card reveal-right">  
-      <form id="contact-form" action="https://formspree.io/f/mayvlrjl" method="POST" class="space-y-4">  
-        <div>  
-          <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Name</label>  
-          <input id="name" name="name" type="text" placeholder="Your name" required class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400">  
-        </div>  
-        <div>  
-          <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Email</label>  
-          <input id="email" name="email" type="email" placeholder="you@example.com" required class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400">  
-        </div>  
-        <div>  
-          <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Message</label>  
-          <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400"></textarea>  
-        </div>  
-        <button type="submit" class="glow-button w-full px-6 py-3 rounded-lg text-white bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 font-semibold">  
-          Send Message  
-        </button>  
-      </form>  
-    </div>  
-  </div>  
-</section>  
+<!-- Form (simulasi kirim ke febrywesker@dev.com) -->
+<div class="testimonial-card reveal-right">
+  <form id="contact-form" class="space-y-4" novalidate>
+    <div>
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-300">Name</label>
+      <input id="name" name="name" type="text" placeholder="Your name" required
+             class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400">
+    </div>
+    <div>
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-300">Email</label>
+      <input id="email" name="email" type="email" placeholder="you@example.com" required
+             class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400">
+    </div>
+    <div>
+      <label for="message" class="block mb-2 text-sm font-medium text-gray-300">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required
+                class="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 focus:border-green-400"></textarea>
+    </div>
+
+    <div class="flex gap-3">
+      <button id="submitBtn" type="submit"
+              class="glow-button flex-1 px-6 py-3 rounded-lg text-white bg-gradient-to-r from-green-600 to-lime-600 hover:from-green-700 hover:to-lime-700 font-semibold">
+        Send Message
+      </button>
+
+      <!-- tombol opsional: buka email client (jika user mau kirim manual) -->
+      <a id="openMailBtn" href="#"
+         class="px-4 py-3 rounded-lg border border-white/10 text-gray-200 hover:bg-white/5 self-center"
+         title="Open mail client to send real email">
+        Send Real
+      </a>
+    </div>
+  </form>
+
+  <!-- SIMULATED FEEDBACK (hidden awalnya) -->
+  <div id="thanksBox" style="display:none; margin-top:12px; padding:16px; border-radius:12px;
+       background:linear-gradient(180deg, rgba(184,255,154,.04), rgba(255,255,255,.02));
+       border:1px solid rgba(184,255,154,.18); color:#dfffe0;">
+    <h4 style="margin:0 0 8px; font-weight:900; color:#eaffd6">Terima kasih — Pesan terkirim!</h4>
+    <p id="thanksMsg" style="margin:0 0 8px; color:#dfffe0">Kami sudah menerima pesanmu.</p>
+    <p style="margin:0 0 8px; font-size:13px; color:#cfead0">
+      Salinan (simulasi) dikirim ke <b>febrywesker@dev.com</b>.
+    </p>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="closeThanks" class="px-4 py-2 rounded-md bg-gray-800 border border-white/6">Tutup</button>
+      <button id="sendCopy" class="px-4 py-2 rounded-md bg-green-600 text-black font-bold">Open Mail Client</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* contact form simulation: prevent network, show thank-you, provide mailto fallback */
+(function(){
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submitBtn');
+  const openMailBtn = document.getElementById('openMailBtn');
+  const thanksBox = document.getElementById('thanksBox');
+  const thanksMsg = document.getElementById('thanksMsg');
+  const closeThanks = document.getElementById('closeThanks');
+  const sendCopy = document.getElementById('sendCopy');
+
+  // target fake recipient
+  const FAKE_TO = 'febrywesker@dev.com';
+
+  // simple sanitizer (text only)
+  function sanitize(s){
+    if (!s) return '';
+    return s.replace(/[<>]+/g,'');
+  }
+
+  // helper create mailto link
+  function makeMailto({name,email,message}){
+    const subject = encodeURIComponent(`Contact from portfolio — ${name || 'Anonymous'}`);
+    const body = encodeURIComponent(
+      `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}\n\n--\nThis is a simulated copy.`
+    );
+    return `mailto:${FAKE_TO}?subject=${subject}&body=${body}`;
+  }
+
+  // optional: open email client link on "Send Real" button
+  openMailBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const name = sanitize(document.getElementById('name').value.trim());
+    const email = sanitize(document.getElementById('email').value.trim());
+    const message = sanitize(document.getElementById('message').value.trim());
+    window.location.href = makeMailto({name,email,message});
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    // disable button to avoid double click
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '.7';
+    submitBtn.textContent = 'Sending…';
+
+    // gather + sanitize
+    const name = sanitize(document.getElementById('name').value.trim());
+    const email = sanitize(document.getElementById('email').value.trim());
+    const message = sanitize(document.getElementById('message').value.trim());
+
+    // basic validation
+    if (!name || !email || !message){
+      alert('Please fill all fields.');
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.textContent = 'Send Message';
+      return;
+    }
+    // basic email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)){
+      alert('Please enter a valid email address.');
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.textContent = 'Send Message';
+      return;
+    }
+
+    // simulate network delay + success
+    setTimeout(() => {
+      // show thank you UI
+      thanksMsg.textContent = `Halo ${name || 'Teman'}, pesanmu sudah tercatat. Terima kasih sudah menghubungi.`;
+      thanksBox.style.display = 'block';
+
+      // update submit button state
+      submitBtn.textContent = 'Sent ✔';
+      submitBtn.style.opacity = '0.9';
+
+      // scroll to feedback
+      thanksBox.scrollIntoView({behavior:'smooth', block:'center'});
+
+      // Optionally: clear inputs (comment if you don't want)
+      form.querySelectorAll('input, textarea').forEach(i => i.value = '');
+
+      // re-enable after a little while so user can send again
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.textContent = 'Send Message';
+      }, 1400);
+
+    }, 900); // simulated latency
+  });
+
+  // close feedback
+  closeThanks.addEventListener('click', () => {
+    thanksBox.style.display = 'none';
+  });
+
+  // open mail client with prefilled copy (user chooses to send real)
+  sendCopy.addEventListener('click', () => {
+    // empty because we cleared fields — but we put a small default note
+    const mailto = makeMailto({
+      name: 'Portfolio Visitor',
+      email: 'no-reply@example.com',
+      message: 'Saya ingin berdiskusi tentang project...'
+    });
+    window.location.href = mailto;
+  });
+})();
+        </script>
 
 <!-- Footer -->  
 <footer class="py-10 text-center text-gray-400">  
