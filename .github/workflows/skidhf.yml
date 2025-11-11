@@ -1,45 +1,43 @@
 name: Extract Portfolio Zip
 
 on:
-  # Jalan otomatis kalau zip-nya di-push
   push:
     paths:
       - 'sahrilcode-sahrilmodzz-portofolio-bee1e19.zip'
-  # Bisa juga manual dari tab Actions
   workflow_dispatch:
     inputs:
       zip_path:
-        description: 'Path ke file .zip (opsional, default: sahrilcode-sahrilmodzz-portofolio-bee1e19.zip)'
+        description: 'Path file .zip (opsional)'
         required: false
         default: 'sahrilcode-sahrilmodzz-portofolio-bee1e19.zip'
 
 permissions:
-  contents: write  # perlu untuk auto-commit hasil ekstraksi
+  contents: write
 
 jobs:
   extract:
     runs-on: ubuntu-latest
     env:
-      ZIP_PATH: ${{ github.event.inputs.zip_path != '' && github.event.inputs.zip_path || 'sahrilcode-sahrilmodzz-portofolio-bee1e19.zip' }}
+      ZIP_PATH: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.zip_path || 'sahrilcode-sahrilmodzz-portofolio-bee1e19.zip' }}
 
     steps:
       - name: Checkout repository
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
-      - name: Pastikan zip ada
+      - name: Verify ZIP presence
         run: |
-          if [ ! -f "$ZIP_PATH" ]; then
-            echo "❌ Zip tidak ditemukan: $ZIP_PATH"
+          echo "ZIP_PATH=${ZIP_PATH}"
+          if [ ! -f "${ZIP_PATH}" ]; then
+            echo "❌ Zip tidak ditemukan: ${ZIP_PATH}"
             exit 1
           fi
-          echo "✅ Found: $ZIP_PATH"
+          echo "✅ Found: ${ZIP_PATH}"
 
-      # (Opsional) Bersihkan konten lama kecuali .git dan .github
-      # HAPUS KOMENTAR JIKA MAU OVERWRITE PENUH
-      # - name: Clean workspace (keep .git & .github)
+      # (Opsional) bersihkan workspace selain .git & .github & zip
+      # - name: Clean workspace (keep .git, .github, and zip)
       #   run: |
       #     shopt -s extglob dotglob
-      #     rm -rf !(.git|.github|$ZIP_PATH)
+      #     rm -rf !(.git|.github|${ZIP_PATH})
 
       - name: Install unzip & extract
         run: |
@@ -47,34 +45,31 @@ jobs:
           sudo apt-get install -y unzip
           rm -rf extracted
           mkdir -p extracted
-          unzip -q "$ZIP_PATH" -d extracted
+          unzip -q "${ZIP_PATH}" -d extracted
 
       - name: Move extracted content to repo root
         shell: bash
         run: |
           shopt -s dotglob
-          # Kalau zip berisi satu folder utama, angkat isinya; kalau tidak, pindahkan semua
-          ROOTS=(extracted/*)
-          if [ ${#ROOTS[@]} -eq 1 ] && [ -d "${ROOTS[0]}" ]; then
-            mv "${ROOTS[0]}"/* .
+          roots=(extracted/*)
+          if [ ${#roots[@]} -eq 1 ] && [ -d "${roots[0]}" ]; then
+            mv "${roots[0]}"/* .
           else
             mv extracted/* .
           fi
 
-      - name: Cleanup temp & (opsional) hapus zip
+      - name: Cleanup temp & remove zip
         run: |
           rm -rf extracted
-          # Hapus zip setelah ekstraksi (comment kalau mau tetap disimpan)
-          rm -f "$ZIP_PATH"
+          rm -f "${ZIP_PATH}"
 
-      - name: Show tree (top-level)
-        run: |
-          ls -la
+      - name: Show top-level tree
+        run: ls -la
 
-      - name: Auto commit extracted files
+      - name: Commit extracted files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: extract ${{ env.ZIP_PATH }} into repository"
+          commit_message: "chore: extract ${ZIP_PATH} into repo"
           commit_user_name: Azbry-Bot
           commit_user_email: bot@azbry.dev
           push_options: --force-with-lease
