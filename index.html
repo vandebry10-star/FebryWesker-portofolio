@@ -9,18 +9,12 @@
   <meta http-equiv="X-XSS-Protection" content="1; mode=block">  
   <meta name="referrer" content="strict-origin-when-cross-origin">    <title>FebryWesker • Azbry Portfolio</title>    <!-- External Stylesheets -->    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+  <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
   <!-- CSS kamu (sudah kita konversi ke hijau Azbry) -->  
   <link rel="stylesheet" href="style.css">  
 </head>  <body class="bg-gray-900 text-white font-sans">  
-<!-- PWA: manifest -->
-<link rel="manifest" href="/manifest.json">
-
-<!-- PWA: warna address bar (Chrome, Android) -->
-<meta name="theme-color" content="#020617">
-
-<!-- PWA: icon utama (Apple / fallback) -->
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
   <!-- NAVIGATION BAR -->  
   <nav class="fixed w-full bg-gray-800 bg-opacity-95 z-50 shadow-2xl transition-all duration-700">  
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
@@ -477,11 +471,10 @@
   </button>    <!-- Scripts -->    <script src="script.js"></script>    <script>  
     document.getElementById('year').textContent = new Date().getFullYear();  
     <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .catch(err => console.log('SW register error', err));
-    });
-  }
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .catch((err) => console.error("SW registration failed:", err));
+    }
   </script>  </body>  
 </html>
