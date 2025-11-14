@@ -476,5 +476,12 @@
     <i class="fas fa-arrow-up text-gray-900"></i>  
   </button>    <!-- Scripts -->    <script src="script.js"></script>    <script>  
     document.getElementById('year').textContent = new Date().getFullYear();  
+    <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .catch(err => console.log('SW register error', err));
+    });
+  }
   </script>  </body>  
 </html>
