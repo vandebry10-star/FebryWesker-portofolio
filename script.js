@@ -1,150 +1,176 @@
 /**
- * Minecraft UI Theme JavaScript
- * FebryWesker Portfolio
+ * Minecraft Portfolio JavaScript
+ * Sound Effects + Animations
  */
 
 (function() {
   'use strict';
 
-  // Initialize when DOM is ready
+  // Initialize
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    initBackToTop();
-    initToggleButtons();
-    initSliders();
+    generateParticles();
+    initTypingEffect();
+    initSmoothScroll();
+    initNavbarScroll();
     initMobileMenu();
-    addKeyboardNavigation();
-    logConsoleMessage();
+    initBackToTop();
+    initSoundEffects();
+    initScrollAnimations();
+    initSkillCards();
+    logConsole();
   }
 
   // ============================================
-  // TAB SWITCHING
+  // MINECRAFT PARTICLES
   // ============================================
   
-  window.switchTab = function(index) {
-    const tabs = document.querySelectorAll('.mc-tab');
-    const boxes = document.querySelectorAll('.mc-box');
+  function generateParticles() {
+    const container = document.getElementById('particles');
+    const particleCount = window.innerWidth < 768 ? 30 : 50;
     
-    // Remove active class from all tabs and boxes
-    tabs.forEach(tab => tab.classList.remove('active'));
-    boxes.forEach(box => box.classList.remove('active'));
-    
-    // Add active class to selected tab and box
-    if (tabs[index]) tabs[index].classList.add('active');
-    if (boxes[index]) boxes[index].classList.add('active');
-    
-    // Scroll to top smoothly
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    
-    // Play click sound (optional)
-    playClickSound();
-  };
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'mc-particle';
+      
+      // Random position
+      particle.style.left = Math.random() * 100 + '%';
+      
+      // Random delay
+      particle.style.animationDelay = Math.random() * 5 + 's';
+      
+      // Random duration
+      particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      
+      // Random colors (white, light blue, light yellow)
+      const colors = [
+        'rgba(255, 255, 255, 0.6)',
+        'rgba(173, 216, 230, 0.6)',
+        'rgba(255, 255, 224, 0.6)'
+      ];
+      particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+      
+      container.appendChild(particle);
+    }
+  }
 
   // ============================================
-  // BACK TO TOP BUTTON
+  // TYPING EFFECT
   // ============================================
   
-  function initBackToTop() {
-    const backBtn = document.querySelector('.mc-back');
+  function initTypingEffect() {
+    const phrases = [
+      'Web Game Developer',
+      'WhatsApp Bot Creator',
+      'UI/UX Designer',
+      'Full Stack Developer',
+      'Problem Solver',
+      'Minecraft Enthusiast'
+    ];
     
-    if (!backBtn) return;
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typing');
+    
+    if (!typingElement) return;
 
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', throttle(() => {
-      if (window.scrollY > 300) {
-        backBtn.classList.add('visible');
+    function type() {
+      const currentPhrase = phrases[phraseIndex];
+      
+      if (isDeleting) {
+        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
+        charIndex--;
       } else {
-        backBtn.classList.remove('visible');
+        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
+        charIndex++;
       }
-    }, 100));
 
-    // Scroll to top on click
-    backBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      playClickSound();
-    });
+      if (!isDeleting && charIndex === currentPhrase.length) {
+        setTimeout(() => { 
+          isDeleting = true; 
+          type(); 
+        }, 2000);
+        return;
+      }
+
+      if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        setTimeout(type, 500);
+        return;
+      }
+
+      const speed = isDeleting ? 50 : 100;
+      setTimeout(type, speed);
+    }
+    
+    type();
   }
 
   // ============================================
-  // TOGGLE BUTTONS (ON/OFF)
+  // SMOOTH SCROLL
   // ============================================
   
-  function initToggleButtons() {
-    const toggles = document.querySelectorAll('.mc-toggle');
+  function initSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
     
-    toggles.forEach(toggle => {
-      toggle.addEventListener('click', function(e) {
-        e.stopPropagation();
+    links.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
         
-        this.classList.toggle('off');
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
         
-        if (this.classList.contains('off')) {
-          this.textContent = 'OFF';
-        } else {
-          this.textContent = 'ON';
+        const target = document.querySelector(targetId);
+        if (!target) return;
+        
+        // Close mobile menu if open
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) {
+          mobileMenu.classList.remove('active');
         }
         
-        playClickSound();
+        // Play click sound
+        playSound('click');
+        
+        // Smooth scroll
+        const offsetTop = target.offsetTop - 70;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
       });
     });
   }
 
   // ============================================
-  // SLIDERS
+  // NAVBAR SCROLL EFFECT
   // ============================================
   
-  function initSliders() {
-    const sliders = document.querySelectorAll('.mc-slider');
+  function initNavbarScroll() {
+    const navbar = document.querySelector('.mc-navbar');
+    let lastScroll = 0;
     
-    sliders.forEach(slider => {
-      const thumb = slider.querySelector('.mc-slider-thumb');
-      if (!thumb) return;
-
-      let isDragging = false;
-
-      thumb.addEventListener('mousedown', startDrag);
-      document.addEventListener('mousemove', drag);
-      document.addEventListener('mouseup', stopDrag);
-
-      // Touch support
-      thumb.addEventListener('touchstart', startDrag);
-      document.addEventListener('touchmove', drag);
-      document.addEventListener('touchend', stopDrag);
-
-      function startDrag(e) {
-        isDragging = true;
-        e.preventDefault();
+    window.addEventListener('scroll', throttle(() => {
+      const currentScroll = window.scrollY;
+      
+      if (currentScroll <= 0) {
+        navbar.style.transform = 'translateY(0)';
+        return;
       }
-
-      function drag(e) {
-        if (!isDragging) return;
-
-        const rect = slider.getBoundingClientRect();
-        let clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        let x = clientX - rect.left;
-        
-        // Constrain within bounds
-        x = Math.max(0, Math.min(x, rect.width));
-        
-        // Update thumb position
-        const percentage = (x / rect.width) * 100;
-        thumb.style.left = percentage + '%';
-        
-        // Update associated label if exists
-        const label = slider.previousElementSibling;
-        if (label && label.querySelector('.mc-slider-value')) {
-          label.querySelector('.mc-slider-value').textContent = Math.round(percentage) + '%';
-        }
+      
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        // Scrolling down
+        navbar.style.transform = 'translateY(-100%)';
+      } else {
+        // Scrolling up
+        navbar.style.transform = 'translateY(0)';
       }
-
-      function stopDrag() {
-        if (isDragging) {
-          isDragging = false;
-          playClickSound();
-        }
-      }
-    });
+      
+      lastScroll = currentScroll;
+    }, 100));
   }
 
   // ============================================
@@ -152,109 +178,179 @@
   // ============================================
   
   function initMobileMenu() {
-    const menuBtn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
+    const toggleBtn = document.getElementById('mobile-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
     
-    if (!menuBtn || !menu) return;
+    if (!toggleBtn || !mobileMenu) return;
 
-    menuBtn.addEventListener('click', () => {
-      menu.classList.toggle('open');
-      playClickSound();
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
-        menu.classList.remove('open');
-      }
-    });
-
-    // Close menu when clicking a link
-    const menuLinks = menu.querySelectorAll('a');
-    menuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        menu.classList.remove('open');
-      });
-    });
-  }
-
-  // ============================================
-  // KEYBOARD NAVIGATION
-  // ============================================
-  
-  function addKeyboardNavigation() {
-    document.addEventListener('keydown', (e) => {
-      const tabs = document.querySelectorAll('.mc-tab');
-      const activeTab = document.querySelector('.mc-tab.active');
+    toggleBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      playSound('click');
       
-      if (!activeTab) return;
-
-      const currentIndex = Array.from(tabs).indexOf(activeTab);
-
-      // Arrow left/right to navigate tabs
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const prevIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
-        switchTab(prevIndex);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        const nextIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
-        switchTab(nextIndex);
+      const icon = toggleBtn.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
       }
+    });
 
-      // Number keys (1-5) to jump to specific tabs
-      if (e.key >= '1' && e.key <= '5') {
-        const tabIndex = parseInt(e.key) - 1;
-        if (tabs[tabIndex]) {
-          e.preventDefault();
-          switchTab(tabIndex);
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+        mobileMenu.classList.remove('active');
+        const icon = toggleBtn.querySelector('i');
+        if (icon) {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
         }
       }
-
-      // Home key to go to first tab
-      if (e.key === 'Home') {
-        e.preventDefault();
-        switchTab(0);
-      }
-
-      // End key to go to last tab
-      if (e.key === 'End') {
-        e.preventDefault();
-        switchTab(tabs.length - 1);
-      }
     });
   }
 
   // ============================================
-  // SOUND EFFECTS (Optional)
+  // BACK TO TOP BUTTON
   // ============================================
   
-  function playClickSound() {
-    // You can add actual Minecraft click sound here
-    // For now, just a placeholder
-     const audio = new Audio('click.ogg');
-     audio.volume = 0.3;
-     audio.play().catch(err => console.log('Audio play failed'));
+  function initBackToTop() {
+    const btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    window.addEventListener('scroll', throttle(() => {
+      if (window.scrollY > 500) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    }, 100));
+
+    btn.addEventListener('click', () => {
+      playSound('click');
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 
   // ============================================
-  // PROJECT CARDS ANIMATION
+  // SOUND EFFECTS
   // ============================================
   
-  function initProjectCards() {
-    const projects = document.querySelectorAll('.mc-project');
+  function initSoundEffects() {
+    // Add click sound to all buttons
+    const buttons = document.querySelectorAll('.mc-btn, .mc-nav-btn, .mc-mobile-link, .mc-skill-card, .mc-project-card, .mc-contact-card');
     
-    projects.forEach((project, index) => {
-      project.style.animationDelay = `${index * 0.1}s`;
-      
-      project.addEventListener('mouseenter', function() {
-        this.style.transform = 'scale(1.02)';
-      });
-
-      project.addEventListener('mouseleave', function() {
-        this.style.transform = 'scale(1)';
+    buttons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        playSound('click');
       });
     });
+
+    // Add hover sound to buttons
+    buttons.forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        playSound('hover');
+      });
+    });
+  }
+
+  function playSound(type) {
+    // Create audio context
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    if (type === 'click') {
+      // Minecraft click sound (sharp, high-pitched)
+      oscillator.frequency.value = 800;
+      oscillator.type = 'square';
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.1);
+    } else if (type === 'hover') {
+      // Soft hover sound
+      oscillator.frequency.value = 600;
+      oscillator.type = 'sine';
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.05);
+    }
+  }
+
+  // ============================================
+  // SCROLL ANIMATIONS
+  // ============================================
+  
+  function initScrollAnimations() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe cards
+    const cards = document.querySelectorAll('.mc-card, .mc-skill-card, .mc-project-card, .mc-contact-card');
+    cards.forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(50px)';
+      card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+      observer.observe(card);
+    });
+  }
+
+  // ============================================
+  // SKILL CARDS INTERACTION
+  // ============================================
+  
+  function initSkillCards() {
+    const skillCards = document.querySelectorAll('.mc-skill-card');
+    
+    skillCards.forEach(card => {
+      card.addEventListener('click', function() {
+        // Add clicked effect
+        this.style.transform = 'translateY(2px) scale(0.98)';
+        
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 100);
+      });
+    });
+
+    // Animate progress bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const progressBar = entry.target.querySelector('.mc-skill-progress');
+          if (progressBar) {
+            const width = progressBar.style.width;
+            progressBar.style.width = '0';
+            setTimeout(() => {
+              progressBar.style.width = width;
+              progressBar.style.transition = 'width 1.5s ease-out';
+            }, 100);
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    skillCards.forEach(card => observer.observe(card));
   }
 
   // ============================================
@@ -274,13 +370,9 @@
 
   function debounce(func, wait) {
     let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
+    return function(...args) {
       clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
+      timeout = setTimeout(() => func.apply(this, args), wait);
     };
   }
 
@@ -288,23 +380,24 @@
   // CONSOLE MESSAGE
   // ============================================
   
-  function logConsoleMessage() {
+  function logConsole() {
     const styles = {
-      title: 'color: #5cb85c; font-size: 20px; font-weight: bold; font-family: monospace;',
-      dev: 'color: #5890d8; font-size: 16px; font-family: monospace;',
-      info: 'color: #fff; font-size: 14px; font-family: monospace;',
+      title: 'color: #7cbd52; font-size: 24px; font-weight: bold; font-family: monospace; text-shadow: 2px 2px 0 #000;',
+      subtitle: 'color: #5890d8; font-size: 16px; font-family: monospace;',
+      info: 'color: #ffd700; font-size: 14px; font-family: monospace;',
       warning: 'color: #d85858; font-size: 12px; font-weight: bold; font-family: monospace;'
     };
 
-    console.log('%c⛏ FEBRYWESKER PORTFOLIO', styles.title);
-    console.log('%c🎮 Theme: Minecraft UI', styles.dev);
-    console.log('%c💎 Projects: Minigame, Bot, Shop', styles.info);
+    console.log('%c⛏ FEBRYWESKER PORTFOLIO ⛏', styles.title);
+    console.log('%c🎮 Minecraft UI Theme', styles.subtitle);
+    console.log('%c💎 Sound Effects Enabled!', styles.info);
     console.log('%c🔗 GitHub: github.com/vandebry10-star', styles.info);
-    console.log('%c⚠ Do not paste unknown code here!', styles.warning);
+    console.log('%c⚠️ Do not paste unknown code here!', styles.warning);
+    console.log('%c✨ Easter Egg: Try Konami Code (↑↑↓↓←→←→BA)', styles.info);
   }
 
   // ============================================
-  // EASTER EGG - Konami Code
+  // EASTER EGG - KONAMI CODE
   // ============================================
   
   let konamiCode = [];
@@ -320,102 +413,104 @@
   });
 
   function activateEasterEgg() {
-    console.log('%c🎉 KONAMI CODE ACTIVATED!', 'color: #5cb85c; font-size: 24px; font-weight: bold;');
-    console.log('%c💎 You found the secret! Achievement Unlocked!', 'color: #5890d8; font-size: 18px;');
+    console.log('%c🎉 KONAMI CODE ACTIVATED!', 'color: #7cbd52; font-size: 24px; font-weight: bold;');
+    console.log('%c💎 Achievement Unlocked: Secret Miner!', 'color: #5ddbf4; font-size: 18px;');
     
-    // Add special effect
+    // Add diamond rain effect
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        createDiamondParticle();
+      }, i * 100);
+    }
+    
+    // Play special sound
+    playSpecialSound();
+    
+    // Shake effect
     document.body.style.animation = 'shake 0.5s';
-    
     setTimeout(() => {
       document.body.style.animation = '';
     }, 500);
   }
 
+  function createDiamondParticle() {
+    const diamond = document.createElement('div');
+    diamond.style.cssText = `
+      position: fixed;
+      top: -50px;
+      left: ${Math.random() * 100}%;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #5ddbf4 0%, #3bb5e8 50%, #5ddbf4 100%);
+      box-shadow: 0 0 10px #5ddbf4, inset -2px -2px 0 rgba(0,0,0,0.3);
+      transform: rotate(45deg);
+      pointer-events: none;
+      z-index: 9999;
+      animation: diamondFall 2s ease-in forwards;
+    `;
+    
+    document.body.appendChild(diamond);
+    
+    setTimeout(() => diamond.remove(), 2000);
+  }
+
+  function playSpecialSound() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    
+    // Play a chord
+    const frequencies = [523.25, 659.25, 783.99]; // C5, E5, G5
+    
+    frequencies.forEach((freq, index) => {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      oscillator.frequency.value = freq;
+      oscillator.type = 'sine';
+      
+      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + index * 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.1 + 0.5);
+      
+      oscillator.start(audioContext.currentTime + index * 0.1);
+      oscillator.stop(audioContext.currentTime + index * 0.1 + 0.5);
+    });
+  }
+
+  // Add shake animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+      20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
+    
+    @keyframes diamondFall {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(405deg);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
   // ============================================
   // PERFORMANCE MONITORING
   // ============================================
   
-  function monitorPerformance() {
+  window.addEventListener('load', () => {
     if ('performance' in window) {
-      window.addEventListener('load', () => {
-        const perfData = performance.timing;
-        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
-        console.log(`Page Load Time: ${pageLoadTime}ms`);
-      });
+      const perfData = performance.timing;
+      const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+      console.log(`%c⚡ Page Load Time: ${pageLoadTime}ms`, 'color: #ffd700; font-size: 12px;');
     }
-  }
-
-  // ============================================
-  // ACCESSIBILITY IMPROVEMENTS
-  // ============================================
-  
-  function improveAccessibility() {
-    // Add ARIA labels
-    const tabs = document.querySelectorAll('.mc-tab');
-    tabs.forEach((tab, index) => {
-      tab.setAttribute('role', 'tab');
-      tab.setAttribute('aria-selected', tab.classList.contains('active'));
-      tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
-    });
-
-    const boxes = document.querySelectorAll('.mc-box');
-    boxes.forEach((box, index) => {
-      box.setAttribute('role', 'tabpanel');
-      box.setAttribute('aria-hidden', !box.classList.contains('active'));
-    });
-  }
-
-  // ============================================
-  // LOCAL STORAGE (Save tab state)
-  // ============================================
-  
-  function saveTabState() {
-    const tabs = document.querySelectorAll('.mc-tab');
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        localStorage.setItem('activeTab', index);
-      });
-    });
-  }
-
-  function loadTabState() {
-    const savedTab = localStorage.getItem('activeTab');
-    if (savedTab !== null) {
-      switchTab(parseInt(savedTab));
-    }
-  }
-
-  // ============================================
-  // SMOOTH SCROLL FOR ANCHORS
-  // ============================================
-  
-  function initSmoothScroll() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-      link.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-        
-        e.preventDefault();
-        
-        const target = document.querySelector(href);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  }
-
-  // ============================================
-  // WINDOW RESIZE HANDLER
-  // ============================================
-  
-  let resizeTimer;
-  window.addEventListener('resize', debounce(() => {
-    console.log('Window resized');
-    // Add any resize-specific logic here
-  }, 250));
+  });
 
   // ============================================
   // VISIBILITY CHANGE HANDLER
@@ -423,22 +518,60 @@
   
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-      console.log('Tab is hidden');
+      console.log('%c💤 Tab is hidden', 'color: #888;');
     } else {
-      console.log('Tab is visible');
+      console.log('%c👀 Tab is visible', 'color: #7cbd52;');
     }
   });
 
-  // Initialize additional features
-  improveAccessibility();
-  initSmoothScroll();
-  initProjectCards();
+  // ============================================
+  // KEYBOARD SHORTCUTS
+  // ============================================
   
-  // Optional: Load saved tab state
-  // loadTabState();
-  // saveTabState();
+  document.addEventListener('keydown', (e) => {
+    // Number keys 1-5 for quick navigation
+    if (e.key >= '1' && e.key <= '5') {
+      const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+      const sectionIndex = parseInt(e.key) - 1;
+      const target = document.getElementById(sections[sectionIndex]);
+      
+      if (target && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        e.preventDefault();
+        playSound('click');
+        const offsetTop = target.offsetTop - 70;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+    
+    // ESC to close mobile menu
+    if (e.key === 'Escape') {
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        const icon = document.querySelector('#mobile-toggle i');
+        if (icon) {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      }
+    }
+  });
 
-  // Optional: Monitor performance
-  // monitorPerformance();
+  // ============================================
+  // WINDOW RESIZE HANDLER
+  // ============================================
+  
+  let resizeTimer;
+  window.addEventListener('resize', debounce(() => {
+    // Regenerate particles on resize
+    const container = document.getElementById('particles');
+    if (container) {
+      container.innerHTML = '';
+      generateParticles();
+    }
+  }, 500));
 
 })();
