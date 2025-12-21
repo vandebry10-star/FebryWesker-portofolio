@@ -1,5 +1,5 @@
 /**
- * Minecraft UI Theme CSS
+ * Minecraft UI Theme CSS - 3D Version
  * FebryWesker Portfolio
  */
 
@@ -49,7 +49,9 @@ body::before {
 .mc-title {
   font-size: 48px;
   color: #fff;
-  text-shadow: 3px 3px 0px #3f3f3f;
+  text-shadow: 
+    4px 4px 0px #3f3f3f,
+    5px 5px 0px #000;
   margin-bottom: 10px;
   letter-spacing: 2px;
 }
@@ -60,7 +62,7 @@ body::before {
   text-shadow: 2px 2px 0px #3f3f3f;
 }
 
-/* Navigation Tabs - Minecraft Style */
+/* Navigation Tabs - 3D Minecraft Style */
 .mc-tabs {
   display: flex;
   gap: 4px;
@@ -72,35 +74,62 @@ body::before {
   flex: 1;
   min-width: 150px;
   padding: 12px 20px;
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  border-bottom: none;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  background: 
+    linear-gradient(180deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #2a2a2a,
+    0 5px 2px rgba(0,0,0,0.5);
   color: #fff;
   text-align: center;
   cursor: pointer;
   transition: all 0.1s;
   font-size: 14px;
-  text-shadow: 2px 2px 0px #3f3f3f;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
   position: relative;
+  transform: translateY(0);
 }
 
 .mc-tab:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
+  background: 
+    linear-gradient(180deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.5),
+    0 4px 0 #2a2a2a,
+    0 5px 2px rgba(0,0,0,0.5);
 }
 
 .mc-tab.active {
-  background: linear-gradient(180deg, #7a7a7a 0%, #5e5e5e 100%);
-  box-shadow: inset 0 0 0 1px #9c9c9c;
+  background: 
+    linear-gradient(180deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a2a2a,
+    0 3px 2px rgba(0,0,0,0.5);
+  transform: translateY(2px);
 }
 
-/* Content Box - White border like Minecraft UI */
-.mc-box {
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid #fff;
+.mc-tab:active {
+  transform: translateY(3px);
   box-shadow: 
-    inset 0 0 0 2px #000,
-    0 4px 0 rgba(0,0,0,0.5);
+    inset -2px -4px 0px rgba(0,0,0,0.8),
+    inset 2px 2px 0px rgba(255,255,255,0.1),
+    0 1px 0 #2a2a2a;
+}
+
+/* Content Box - 3D White border */
+.mc-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 4px solid;
+  border-color: #ffffff #000000 #000000 #ffffff;
+  box-shadow: 
+    inset 0 0 0 2px #555,
+    0 6px 0 rgba(0,0,0,0.5),
+    0 8px 10px rgba(0,0,0,0.3);
   padding: 20px;
   margin-bottom: 20px;
   display: none;
@@ -126,33 +155,53 @@ body::before {
 .mc-section-title {
   font-size: 20px;
   color: #fff;
-  text-shadow: 2px 2px 0px #3f3f3f;
+  text-shadow: 
+    3px 3px 0px #3f3f3f,
+    4px 4px 0px #000;
   margin-bottom: 15px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #555;
+  border-bottom: 3px solid #555;
 }
 
-/* List Item - Minecraft button style */
+/* List Item - 3D Minecraft button */
 .mc-list-item {
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  background: 
+    linear-gradient(180deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #2a2a2a,
+    0 5px 3px rgba(0,0,0,0.4);
   padding: 15px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   cursor: pointer;
   transition: all 0.1s;
   display: flex;
   align-items: center;
   gap: 12px;
+  transform: translateY(0);
 }
 
 .mc-list-item:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
-  box-shadow: inset 0 0 0 1px #9c9c9c;
+  background: 
+    linear-gradient(180deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.5),
+    0 4px 0 #2a2a2a,
+    0 5px 4px rgba(0,0,0,0.4);
 }
 
 .mc-list-item:active {
-  background: linear-gradient(180deg, #4b4b4b 0%, #3a3a3a 100%);
+  background: 
+    linear-gradient(180deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a2a2a,
+    0 3px 2px rgba(0,0,0,0.4);
+  transform: translateY(2px);
 }
 
 /* Icon Box */
@@ -160,7 +209,11 @@ body::before {
   width: 32px;
   height: 32px;
   background: #fff;
-  border: 1px solid #000;
+  border: 2px solid;
+  border-color: #fff #000 #000 #fff;
+  box-shadow: 
+    inset -1px -1px 0px rgba(0,0,0,0.3),
+    inset 1px 1px 0px rgba(255,255,255,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,111 +222,231 @@ body::before {
   image-rendering: pixelated;
 }
 
-/* Buttons */
+/* Buttons - 3D Minecraft Style */
 .mc-button {
   padding: 12px 24px;
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  background: 
+    linear-gradient(180deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #2a2a2a,
+    0 5px 3px rgba(0,0,0,0.4);
   color: #fff;
   text-align: center;
   cursor: pointer;
   transition: all 0.1s;
   font-size: 14px;
-  text-shadow: 2px 2px 0px #3f3f3f;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
   font-family: 'Courier New', monospace;
   display: inline-block;
   text-decoration: none;
   margin: 4px;
+  transform: translateY(0);
 }
 
 .mc-button:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
-  box-shadow: inset 0 0 0 1px #9c9c9c;
+  background: 
+    linear-gradient(180deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.5),
+    0 4px 0 #2a2a2a,
+    0 5px 4px rgba(0,0,0,0.4);
 }
 
 .mc-button:active {
-  background: linear-gradient(180deg, #4b4b4b 0%, #3a3a3a 100%);
+  background: 
+    linear-gradient(180deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a2a2a,
+    0 3px 2px rgba(0,0,0,0.4);
+  transform: translateY(2px);
 }
 
-/* Green Button */
+/* Green Button - 3D */
 .mc-button-green {
-  background: linear-gradient(180deg, #5cb85c 0%, #449d44 100%);
-  box-shadow: inset 0 0 0 1px #6dc96d;
+  background: 
+    linear-gradient(180deg, #7dc97d 0%, #5cb85c 50%, #449d44 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #2a5a2a,
+    0 5px 3px rgba(0,0,0,0.4);
 }
 
 .mc-button-green:hover {
-  background: linear-gradient(180deg, #6dc96d 0%, #55aa55 100%);
+  background: 
+    linear-gradient(180deg, #8ed98e 0%, #6dc96d 50%, #55aa55 100%);
 }
 
-/* Blue Button */
+.mc-button-green:active {
+  background: 
+    linear-gradient(180deg, #5cb85c 0%, #4aa74a 50%, #398e39 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a5a2a;
+  transform: translateY(2px);
+}
+
+/* Blue Button - 3D */
 .mc-button-blue {
-  background: linear-gradient(180deg, #5890d8 0%, #4070b8 100%);
-  box-shadow: inset 0 0 0 1px #69a0e8;
+  background: 
+    linear-gradient(180deg, #72a8e8 0%, #5890d8 50%, #4070b8 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #2a4a6a,
+    0 5px 3px rgba(0,0,0,0.4);
 }
 
 .mc-button-blue:hover {
-  background: linear-gradient(180deg, #69a0e8 0%, #5080c8 100%);
+  background: 
+    linear-gradient(180deg, #82b8f8 0%, #69a0e8 50%, #5080c8 100%);
 }
 
-/* Red Button */
+.mc-button-blue:active {
+  background: 
+    linear-gradient(180deg, #5890d8 0%, #4880c8 50%, #3860a8 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a4a6a;
+  transform: translateY(2px);
+}
+
+/* Red Button - 3D */
 .mc-button-red {
-  background: linear-gradient(180deg, #d85858 0%, #b84040 100%);
-  box-shadow: inset 0 0 0 1px #e86969;
+  background: 
+    linear-gradient(180deg, #e87878 0%, #d85858 50%, #b84040 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 4px 0 #6a2a2a,
+    0 5px 3px rgba(0,0,0,0.4);
 }
 
 .mc-button-red:hover {
-  background: linear-gradient(180deg, #e86969 0%, #c85050 100%);
+  background: 
+    linear-gradient(180deg, #f88888 0%, #e86969 50%, #c85050 100%);
 }
 
-/* Toggle Switch - ON/OFF */
+.mc-button-red:active {
+  background: 
+    linear-gradient(180deg, #d85858 0%, #c84848 50%, #a83838 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #6a2a2a;
+  transform: translateY(2px);
+}
+
+/* Toggle Switch - 3D ON/OFF */
 .mc-toggle {
   padding: 8px 16px;
-  background: linear-gradient(180deg, #5cb85c 0%, #449d44 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #6dc96d;
+  background: 
+    linear-gradient(180deg, #7dc97d 0%, #5cb85c 50%, #449d44 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 3px 0 #2a5a2a,
+    0 4px 2px rgba(0,0,0,0.4);
   color: #fff;
   cursor: pointer;
   font-size: 12px;
-  text-shadow: 2px 2px 0px #3f3f3f;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
   display: inline-block;
   min-width: 60px;
   text-align: center;
+  transition: all 0.1s;
+  transform: translateY(0);
+}
+
+.mc-toggle:active {
+  transform: translateY(2px);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 1px 0 #2a5a2a;
 }
 
 .mc-toggle.off {
-  background: linear-gradient(180deg, #d85858 0%, #b84040 100%);
-  box-shadow: inset 0 0 0 1px #e86969;
+  background: 
+    linear-gradient(180deg, #e87878 0%, #d85858 50%, #b84040 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 3px 0 #6a2a2a,
+    0 4px 2px rgba(0,0,0,0.4);
+}
+
+.mc-toggle.off:active {
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 1px 0 #6a2a2a;
 }
 
 /* Grid Layout */
 .mc-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 8px;
+  gap: 12px;
 }
 
-/* Project Card */
+/* Project Card - 3D */
 .mc-project {
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  background: 
+    linear-gradient(180deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 5px 0 #2a2a2a,
+    0 6px 4px rgba(0,0,0,0.4);
   padding: 15px;
   cursor: pointer;
   transition: all 0.1s;
+  transform: translateY(0);
 }
 
 .mc-project:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
-  box-shadow: inset 0 0 0 1px #9c9c9c;
+  background: 
+    linear-gradient(180deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.5),
+    0 5px 0 #2a2a2a,
+    0 6px 5px rgba(0,0,0,0.4);
+  transform: translateY(-2px);
+}
+
+.mc-project:active {
+  background: 
+    linear-gradient(180deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a2a2a,
+    0 3px 2px rgba(0,0,0,0.4);
+  transform: translateY(2px);
 }
 
 .mc-project-img {
   width: 100%;
   height: 150px;
   background: #2a2a2a;
-  border: 2px solid #000;
-  margin-bottom: 10px;
+  border: 3px solid;
+  border-color: #000 #fff #fff #000;
+  box-shadow: 
+    inset 0 0 0 2px #555,
+    0 3px 5px rgba(0,0,0,0.3);
+  margin-bottom: 12px;
   object-fit: cover;
   image-rendering: pixelated;
 }
@@ -281,27 +454,35 @@ body::before {
 .mc-project-title {
   font-size: 16px;
   color: #fff;
-  text-shadow: 2px 2px 0px #3f3f3f;
+  text-shadow: 
+    2px 2px 0px #3f3f3f,
+    3px 3px 0px #000;
   margin-bottom: 8px;
 }
 
 .mc-project-desc {
   font-size: 12px;
-  color: #aaa;
-  text-shadow: 1px 1px 0px #000;
+  color: #e0e0e0;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.5);
   line-height: 1.6;
   margin-bottom: 8px;
 }
 
-/* Tag */
+/* Tag - 3D */
 .mc-tag {
   display: inline-block;
   padding: 4px 8px;
-  background: rgba(0,0,0,0.5);
-  border: 1px solid #555;
+  background: 
+    linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 100%);
+  border: 2px solid;
+  border-color: #000 #666 #666 #000;
+  box-shadow: 
+    inset -1px -1px 0px rgba(0,0,0,0.5),
+    inset 1px 1px 0px rgba(255,255,255,0.2);
   font-size: 10px;
   color: #aaa;
   margin: 2px;
+  text-shadow: 1px 1px 0px #000;
 }
 
 /* Footer */
@@ -311,27 +492,36 @@ body::before {
   color: #888;
   font-size: 12px;
   text-shadow: 1px 1px 0px #000;
-  border-top: 2px solid #333;
+  border-top: 3px solid #333;
   margin-top: 40px;
 }
 
-/* Slider */
+/* Slider - 3D */
 .mc-slider {
   width: 100%;
-  height: 20px;
-  background: linear-gradient(180deg, #3a3a3a 0%, #2a2a2a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #555;
+  height: 24px;
+  background: 
+    linear-gradient(180deg, #2a2a2a 0%, #3a3a3a 100%);
+  border: 3px solid;
+  border-color: #000 #666 #666 #000;
+  box-shadow: 
+    inset 2px 2px 3px rgba(0,0,0,0.5);
   margin: 10px 0;
   position: relative;
   cursor: pointer;
 }
 
 .mc-slider-thumb {
-  width: 8px;
-  height: 16px;
-  background: linear-gradient(180deg, #fff 0%, #ccc 100%);
-  border: 1px solid #000;
+  width: 12px;
+  height: 18px;
+  background: 
+    linear-gradient(180deg, #ffffff 0%, #cccccc 50%, #999999 100%);
+  border: 2px solid;
+  border-color: #fff #000 #000 #fff;
+  box-shadow: 
+    inset -1px -1px 0px rgba(0,0,0,0.3),
+    inset 1px 1px 0px rgba(255,255,255,0.5),
+    2px 2px 3px rgba(0,0,0,0.4);
   position: absolute;
   top: 0;
   cursor: grab;
@@ -339,18 +529,27 @@ body::before {
 
 .mc-slider-thumb:active {
   cursor: grabbing;
+  box-shadow: 
+    inset -1px -1px 0px rgba(0,0,0,0.5),
+    inset 1px 1px 0px rgba(255,255,255,0.3),
+    1px 1px 2px rgba(0,0,0,0.4);
 }
 
-/* Back to Top Button */
+/* Back to Top Button - 3D */
 .mc-back {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  width: 54px;
+  height: 54px;
+  background: 
+    linear-gradient(180deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: none;
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.4),
+    0 5px 0 #2a2a2a,
+    0 6px 5px rgba(0,0,0,0.5);
   color: #fff;
   display: flex;
   align-items: center;
@@ -361,6 +560,8 @@ body::before {
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s;
+  text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+  transform: translateY(0);
 }
 
 .mc-back.visible {
@@ -369,27 +570,56 @@ body::before {
 }
 
 .mc-back:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
+  background: 
+    linear-gradient(180deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.5),
+    inset 2px 2px 0px rgba(255,255,255,0.5),
+    0 5px 0 #2a2a2a,
+    0 6px 6px rgba(0,0,0,0.5);
+  transform: translateY(-2px);
 }
 
-/* Custom Scrollbar - Minecraft Style */
+.mc-back:active {
+  background: 
+    linear-gradient(180deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
+  box-shadow: 
+    inset -2px -4px 0px rgba(0,0,0,0.7),
+    inset 2px 2px 0px rgba(255,255,255,0.2),
+    0 2px 0 #2a2a2a;
+  transform: translateY(2px);
+}
+
+/* Custom Scrollbar - 3D */
 ::-webkit-scrollbar {
-  width: 16px;
+  width: 18px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #2a2a2a;
+  background: 
+    linear-gradient(90deg, #2a2a2a 0%, #3a3a3a 100%);
   border: 2px solid #000;
+  box-shadow: inset 2px 0 3px rgba(0,0,0,0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #565656 0%, #3a3a3a 100%);
-  border: 2px solid #000;
-  box-shadow: inset 0 0 0 1px #8b8b8b;
+  background: 
+    linear-gradient(90deg, #c6c6c6 0%, #8b8b8b 50%, #5e5e5e 100%);
+  border: 2px solid;
+  border-color: #fff #000 #000 #fff;
+  box-shadow: 
+    inset -1px -2px 0px rgba(0,0,0,0.5),
+    inset 1px 1px 0px rgba(255,255,255,0.4);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #676767 0%, #4b4b4b 100%);
+  background: 
+    linear-gradient(90deg, #d0d0d0 0%, #9a9a9a 50%, #6e6e6e 100%);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: 
+    linear-gradient(90deg, #a0a0a0 0%, #7a7a7a 50%, #5e5e5e 100%);
 }
 
 /* Selection */
@@ -453,4 +683,4 @@ body::before {
   .mc-back {
     display: none;
   }
-}
+  }
