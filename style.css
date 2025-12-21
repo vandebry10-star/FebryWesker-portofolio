@@ -90,6 +90,7 @@ body {
   box-shadow: 
     0 0 0 8px rgba(60,60,80,0.25),   /* Shadow pertama */
     0 0 0 16px rgba(40,40,60,0.15);  /* Shadow kedua */
+  animation: cloudFloat 30s linear infinite;
 }
 
 .mc-clouds::before {
