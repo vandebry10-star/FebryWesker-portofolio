@@ -1,466 +1,260 @@
 /**
- * FebryWesker Portfolio JavaScript
- * Theme: Elegant Blue Purple Pink
- * Mobile-First Interactive Features
+ * Minecraft UI Theme JavaScript
+ * FebryWesker Portfolio
  */
 
 (function() {
   'use strict';
 
-  // ============================================
-  // INITIALIZATION
-  // ============================================
-  
+  // Initialize when DOM is ready
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    setCurrentYear();
-    generateStars();
-    initMobileMenu();
-    initTypingEffect();
-    initSmoothScroll();
-    initScrollReveal();
     initBackToTop();
-    initContactForm();
-    initNavbarBehavior();
-    initButtonRipple();
-    initParallaxHero();
-    preventImageRightClick();
+    initToggleButtons();
+    initSliders();
+    initMobileMenu();
+    addKeyboardNavigation();
     logConsoleMessage();
-    initLazyLoading();
   }
 
   // ============================================
-  // SET CURRENT YEAR IN FOOTER
+  // TAB SWITCHING
   // ============================================
   
-  function setCurrentYear() {
-    const yearElement = document.getElementById('year');
-    if (yearElement) {
-      yearElement.textContent = new Date().getFullYear();
-    }
-  }
-
-  // ============================================
-  // GENERATE ANIMATED STARS
-  // ============================================
-  
-  function generateStars() {
-    const starsContainer = document.getElementById('stars');
-    if (!starsContainer) return;
-
-    const starCount = window.innerWidth < 768 ? 50 : 100;
+  window.switchTab = function(index) {
+    const tabs = document.querySelectorAll('.mc-tab');
+    const boxes = document.querySelectorAll('.mc-box');
     
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.animationDelay = Math.random() * 3 + 's';
-      star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-      starsContainer.appendChild(star);
-    }
-  }
-
-  // ============================================
-  // MOBILE MENU TOGGLE
-  // ============================================
-  
-  function initMobileMenu() {
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+    // Remove active class from all tabs and boxes
+    tabs.forEach(tab => tab.classList.remove('active'));
+    boxes.forEach(box => box.classList.remove('active'));
     
-    if (!mobileMenuBtn || !mobileMenu) return;
-
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      const icon = mobileMenuBtn.querySelector('i');
-      
-      if (icon) {
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
-      }
-    });
-
-    // Close menu when clicking links
-    const menuLinks = mobileMenu.querySelectorAll('a');
-    menuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        }
-      });
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-        mobileMenu.classList.remove('open');
-        const icon = mobileMenuBtn.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        }
-      }
-    });
-  }
-
-  // ============================================
-  // TYPING EFFECT
-  // ============================================
-  
-  function initTypingEffect() {
-    const phrases = [
-      'Web Game Developer',
-      'WhatsApp Bot Creator',
-      'UI/UX Designer',
-      'Full Stack Developer',
-      'Problem Solver',
-      'E-commerce Builder'
-    ];
+    // Add active class to selected tab and box
+    if (tabs[index]) tabs[index].classList.add('active');
+    if (boxes[index]) boxes[index].classList.add('active');
     
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const typingElement = document.getElementById('typing');
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    if (!typingElement) return;
-
-    function type() {
-      const currentPhrase = phrases[phraseIndex];
-      
-      if (isDeleting) {
-        typingElement.textContent = currentPhrase.substring(0, charIndex - 1);
-        charIndex--;
-      } else {
-        typingElement.textContent = currentPhrase.substring(0, charIndex + 1);
-        charIndex++;
-      }
-
-      // Pause at end of phrase
-      if (!isDeleting && charIndex === currentPhrase.length) {
-        setTimeout(() => { 
-          isDeleting = true; 
-          type(); 
-        }, 2000);
-        return;
-      }
-
-      // Move to next phrase
-      if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        setTimeout(type, 500);
-        return;
-      }
-
-      const speed = isDeleting ? 50 : 100;
-      setTimeout(type, speed);
-    }
-    
-    type();
-  }
-
-  // ============================================
-  // SMOOTH SCROLL
-  // ============================================
-  
-  function initSmoothScroll() {
-    const links = document.querySelectorAll('a[href^="#"]');
-    
-    links.forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const target = document.querySelector(targetId);
-        if (!target) return;
-        
-        const offset = 80; // Navbar height
-        const targetPosition = target.offsetTop - offset;
-        
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      });
-    });
-  }
-
-  // ============================================
-  // SCROLL REVEAL ANIMATIONS
-  // ============================================
-  
-  function initScrollReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    
-    if (reveals.length === 0) return;
-
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          // Stagger animation
-          setTimeout(() => {
-            entry.target.classList.add('active');
-          }, index * 100);
-          
-          // Stop observing once revealed
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-
-    reveals.forEach(reveal => revealObserver.observe(reveal));
-  }
+    // Play click sound (optional)
+    playClickSound();
+  };
 
   // ============================================
   // BACK TO TOP BUTTON
   // ============================================
   
   function initBackToTop() {
-    const backToTop = document.getElementById('back-to-top');
-    if (!backToTop) return;
-
-    let scrollThreshold = 300;
+    const backBtn = document.querySelector('.mc-back');
     
+    if (!backBtn) return;
+
+    // Show/hide button based on scroll position
     window.addEventListener('scroll', throttle(() => {
-      if (window.scrollY > scrollThreshold) {
-        backToTop.classList.add('visible');
+      if (window.scrollY > 300) {
+        backBtn.classList.add('visible');
       } else {
-        backToTop.classList.remove('visible');
+        backBtn.classList.remove('visible');
       }
     }, 100));
 
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ 
-        top: 0, 
-        behavior: 'smooth' 
+    // Scroll to top on click
+    backBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      playClickSound();
+    });
+  }
+
+  // ============================================
+  // TOGGLE BUTTONS (ON/OFF)
+  // ============================================
+  
+  function initToggleButtons() {
+    const toggles = document.querySelectorAll('.mc-toggle');
+    
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        
+        this.classList.toggle('off');
+        
+        if (this.classList.contains('off')) {
+          this.textContent = 'OFF';
+        } else {
+          this.textContent = 'ON';
+        }
+        
+        playClickSound();
       });
     });
   }
 
   // ============================================
-  // CONTACT FORM HANDLING
+  // SLIDERS
   // ============================================
   
-  function initContactForm() {
-    const contactForm = document.getElementById('contact-form');
-    const formFeedback = document.getElementById('form-feedback');
+  function initSliders() {
+    const sliders = document.querySelectorAll('.mc-slider');
     
-    if (!contactForm) return;
+    sliders.forEach(slider => {
+      const thumb = slider.querySelector('.mc-slider-thumb');
+      if (!thumb) return;
 
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const nameInput = document.getElementById('form-name');
-      const emailInput = document.getElementById('form-email');
-      const messageInput = document.getElementById('form-message');
-      
-      if (!nameInput || !emailInput || !messageInput) return;
-      
-      const name = sanitizeInput(nameInput.value.trim());
-      const email = sanitizeInput(emailInput.value.trim());
-      const message = sanitizeInput(messageInput.value.trim());
-      
-      // Validation
-      if (!name || name.length < 2) {
-        showAlert('Please enter a valid name (minimum 2 characters)');
-        return;
+      let isDragging = false;
+
+      thumb.addEventListener('mousedown', startDrag);
+      document.addEventListener('mousemove', drag);
+      document.addEventListener('mouseup', stopDrag);
+
+      // Touch support
+      thumb.addEventListener('touchstart', startDrag);
+      document.addEventListener('touchmove', drag);
+      document.addEventListener('touchend', stopDrag);
+
+      function startDrag(e) {
+        isDragging = true;
+        e.preventDefault();
       }
-      
-      if (!validateEmail(email)) {
-        showAlert('Please enter a valid email address');
-        return;
-      }
-      
-      if (!message || message.length < 10) {
-        showAlert('Please enter a message (minimum 10 characters)');
-        return;
-      }
-      
-      // Show success feedback
-      if (formFeedback) {
-        formFeedback.classList.remove('hidden');
-      }
-      
-      // Optional: Create mailto link
-      const mailtoLink = `mailto:febrywesker@dev.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0A%0AFrom: ${encodeURIComponent(email)}`;
-      
-      // Reset form after delay
-      setTimeout(() => {
-        contactForm.reset();
-        if (formFeedback) {
-          formFeedback.classList.add('hidden');
-        }
+
+      function drag(e) {
+        if (!isDragging) return;
+
+        const rect = slider.getBoundingClientRect();
+        let clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        let x = clientX - rect.left;
         
-        // Optionally open email client
-        // window.location.href = mailtoLink;
-      }, 3000);
+        // Constrain within bounds
+        x = Math.max(0, Math.min(x, rect.width));
+        
+        // Update thumb position
+        const percentage = (x / rect.width) * 100;
+        thumb.style.left = percentage + '%';
+        
+        // Update associated label if exists
+        const label = slider.previousElementSibling;
+        if (label && label.querySelector('.mc-slider-value')) {
+          label.querySelector('.mc-slider-value').textContent = Math.round(percentage) + '%';
+        }
+      }
+
+      function stopDrag() {
+        if (isDragging) {
+          isDragging = false;
+          playClickSound();
+        }
+      }
     });
   }
 
   // ============================================
-  // NAVBAR HIDE/SHOW ON SCROLL
+  // MOBILE MENU
   // ============================================
   
-  function initNavbarBehavior() {
-    let lastScroll = 0;
-    const nav = document.querySelector('nav');
+  function initMobileMenu() {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
     
-    if (!nav) return;
+    if (!menuBtn || !menu) return;
 
-    window.addEventListener('scroll', throttle(() => {
-      const currentScroll = window.scrollY;
-      
-      if (currentScroll <= 0) {
-        nav.style.transform = 'translateY(0)';
-        return;
-      }
-      
-      if (currentScroll > lastScroll && currentScroll > 100) {
-        // Scrolling down
-        nav.style.transform = 'translateY(-100%)';
-      } else {
-        // Scrolling up
-        nav.style.transform = 'translateY(0)';
-      }
-      
-      lastScroll = currentScroll;
-    }, 100));
-  }
+    menuBtn.addEventListener('click', () => {
+      menu.classList.toggle('open');
+      playClickSound();
+    });
 
-  // ============================================
-  // BUTTON RIPPLE EFFECT
-  // ============================================
-  
-  function initButtonRipple() {
-    const buttons = document.querySelectorAll('.btn, button');
-    
-    buttons.forEach(button => {
-      button.addEventListener('click', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const ripple = document.createElement('span');
-        ripple.style.cssText = `
-          position: absolute;
-          width: 20px;
-          height: 20px;
-          background: rgba(255, 255, 255, 0.6);
-          border-radius: 50%;
-          left: ${x}px;
-          top: ${y}px;
-          transform: translate(-50%, -50%) scale(0);
-          animation: rippleEffect 0.6s ease-out;
-          pointer-events: none;
-          z-index: 1000;
-        `;
-        
-        this.style.position = 'relative';
-        this.style.overflow = 'hidden';
-        this.appendChild(ripple);
-        
-        setTimeout(() => ripple.remove(), 600);
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !menuBtn.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
+    // Close menu when clicking a link
+    const menuLinks = menu.querySelectorAll('a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
       });
     });
-
-    // Add ripple animation to document
-    if (!document.getElementById('ripple-style')) {
-      const style = document.createElement('style');
-      style.id = 'ripple-style';
-      style.textContent = `
-        @keyframes rippleEffect {
-          to {
-            transform: translate(-50%, -50%) scale(15);
-            opacity: 0;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
   }
 
   // ============================================
-  // PARALLAX HERO EFFECT
+  // KEYBOARD NAVIGATION
   // ============================================
   
-  function initParallaxHero() {
-    const hero = document.querySelector('#home');
-    if (!hero) return;
-    
-    // Only apply on desktop
-    if (window.innerWidth < 768) return;
+  function addKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+      const tabs = document.querySelectorAll('.mc-tab');
+      const activeTab = document.querySelector('.mc-tab.active');
+      
+      if (!activeTab) return;
 
-    window.addEventListener('scroll', throttle(() => {
-      if (window.scrollY < window.innerHeight) {
-        const scrolled = window.scrollY;
-        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-        hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+      const currentIndex = Array.from(tabs).indexOf(activeTab);
+
+      // Arrow left/right to navigate tabs
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : tabs.length - 1;
+        switchTab(prevIndex);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        const nextIndex = currentIndex < tabs.length - 1 ? currentIndex + 1 : 0;
+        switchTab(nextIndex);
       }
-    }, 16));
-  }
 
-  // ============================================
-  // PREVENT IMAGE RIGHT-CLICK
-  // ============================================
-  
-  function preventImageRightClick() {
-    const images = document.querySelectorAll('img');
-    images.forEach(img => {
-      img.addEventListener('contextmenu', e => e.preventDefault());
+      // Number keys (1-5) to jump to specific tabs
+      if (e.key >= '1' && e.key <= '5') {
+        const tabIndex = parseInt(e.key) - 1;
+        if (tabs[tabIndex]) {
+          e.preventDefault();
+          switchTab(tabIndex);
+        }
+      }
+
+      // Home key to go to first tab
+      if (e.key === 'Home') {
+        e.preventDefault();
+        switchTab(0);
+      }
+
+      // End key to go to last tab
+      if (e.key === 'End') {
+        e.preventDefault();
+        switchTab(tabs.length - 1);
+      }
     });
   }
 
   // ============================================
-  // LAZY LOADING IMAGES
+  // SOUND EFFECTS (Optional)
   // ============================================
   
-  function initLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    if (images.length === 0) return;
+  function playClickSound() {
+    // You can add actual Minecraft click sound here
+    // For now, just a placeholder
+     const audio = new Audio('click.ogg');
+     audio.volume = 0.3;
+     audio.play().catch(err => console.log('Audio play failed'));
+  }
 
-    const imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-          imageObserver.unobserve(img);
-        }
+  // ============================================
+  // PROJECT CARDS ANIMATION
+  // ============================================
+  
+  function initProjectCards() {
+    const projects = document.querySelectorAll('.mc-project');
+    
+    projects.forEach((project, index) => {
+      project.style.animationDelay = `${index * 0.1}s`;
+      
+      project.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.02)';
+      });
+
+      project.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
       });
     });
-
-    images.forEach(img => imageObserver.observe(img));
-  }
-
-  // ============================================
-  // CONSOLE MESSAGE
-  // ============================================
-  
-  function logConsoleMessage() {
-    const styles = {
-      title: 'color: #8b5cf6; font-size: 20px; font-weight: bold;',
-      dev: 'color: #ec4899; font-size: 16px; font-weight: bold;',
-      info: 'color: #6366f1; font-size: 14px;',
-      link: 'color: #a855f7; font-size: 14px;',
-      warning: 'color: #ef4444; font-size: 12px; font-weight: bold;'
-    };
-
-    console.log('%c🚀 FebryWesker Portfolio', styles.title);
-    console.log('%c💜 Developer: FebryWesker', styles.dev);
-    console.log('%c🎮 Projects: Minigame, Bot, Shop', styles.info);
-    console.log('%c🔗 GitHub: https://github.com/vandebry10-star', styles.link);
-    console.log('%c⚠️ Warning: Do not paste unknown code here!', styles.warning);
   }
 
   // ============================================
@@ -490,102 +284,27 @@
     };
   }
 
-  function sanitizeInput(input) {
-    const div = document.createElement('div');
-    div.textContent = input;
-    return div.innerHTML;
-  }
-
-  function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  function showAlert(message) {
-    alert(message);
-  }
-
   // ============================================
-  // PERFORMANCE OPTIMIZATION
+  // CONSOLE MESSAGE
   // ============================================
   
-  // Reduce animations on low-end devices
-  if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
-    document.documentElement.style.setProperty('--animation-speed', '0.5');
+  function logConsoleMessage() {
+    const styles = {
+      title: 'color: #5cb85c; font-size: 20px; font-weight: bold; font-family: monospace;',
+      dev: 'color: #5890d8; font-size: 16px; font-family: monospace;',
+      info: 'color: #fff; font-size: 14px; font-family: monospace;',
+      warning: 'color: #d85858; font-size: 12px; font-weight: bold; font-family: monospace;'
+    };
+
+    console.log('%c⛏ FEBRYWESKER PORTFOLIO', styles.title);
+    console.log('%c🎮 Theme: Minecraft UI', styles.dev);
+    console.log('%c💎 Projects: Minigame, Bot, Shop', styles.info);
+    console.log('%c🔗 GitHub: github.com/vandebry10-star', styles.info);
+    console.log('%c⚠ Do not paste unknown code here!', styles.warning);
   }
 
-  // Handle visibility change (pause animations when tab is hidden)
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      document.body.style.animationPlayState = 'paused';
-    } else {
-      document.body.style.animationPlayState = 'running';
-    }
-  });
-
   // ============================================
-  // SECURITY: DISABLE DEV TOOLS IN PRODUCTION
-  // ============================================
-  
-  (function() {
-    const isProduction = window.location.hostname !== 'localhost' && 
-                        window.location.hostname !== '127.0.0.1' &&
-                        !window.location.hostname.includes('192.168');
-    
-    if (isProduction) {
-      // Disable common dev tools shortcuts
-      document.addEventListener('keydown', function(e) {
-        // F12
-        if (e.key === 'F12') {
-          e.preventDefault();
-          return false;
-        }
-        
-        // Ctrl+Shift+I (Windows/Linux)
-        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-          e.preventDefault();
-          return false;
-        }
-        
-        // Ctrl+Shift+J (Windows/Linux)
-        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-          e.preventDefault();
-          return false;
-        }
-        
-        // Ctrl+U (View Source)
-        if (e.ctrlKey && e.key === 'U') {
-          e.preventDefault();
-          return false;
-        }
-        
-        // Cmd+Option+I (Mac)
-        if (e.metaKey && e.altKey && e.key === 'I') {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      // Detect dev tools
-      let devtools = { open: false };
-      const threshold = 160;
-      
-      setInterval(() => {
-        if (window.outerWidth - window.innerWidth > threshold || 
-            window.outerHeight - window.innerHeight > threshold) {
-          if (!devtools.open) {
-            devtools.open = true;
-            console.log('%c⚠️ Developer tools detected', 'color: #ef4444; font-size: 16px; font-weight: bold;');
-          }
-        } else {
-          devtools.open = false;
-        }
-      }, 1000);
-    }
-  })();
-
-  // ============================================
-  // EASTER EGG
+  // EASTER EGG - Konami Code
   // ============================================
   
   let konamiCode = [];
@@ -601,32 +320,125 @@
   });
 
   function activateEasterEgg() {
-    console.log('%c🎉 Konami Code Activated!', 'color: #8b5cf6; font-size: 24px; font-weight: bold;');
-    console.log('%c🌟 You found the secret!', 'color: #ec4899; font-size: 18px;');
+    console.log('%c🎉 KONAMI CODE ACTIVATED!', 'color: #5cb85c; font-size: 24px; font-weight: bold;');
+    console.log('%c💎 You found the secret! Achievement Unlocked!', 'color: #5890d8; font-size: 18px;');
     
-    // Add rainbow effect to gradient text
-    const gradientTexts = document.querySelectorAll('.gradient-text');
-    gradientTexts.forEach(text => {
-      text.style.animation = 'none';
-      text.style.background = 'linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff)';
-      text.style.backgroundSize = '200% 200%';
-      text.style.animation = 'gradientShift 2s ease infinite';
+    // Add special effect
+    document.body.style.animation = 'shake 0.5s';
+    
+    setTimeout(() => {
+      document.body.style.animation = '';
+    }, 500);
+  }
+
+  // ============================================
+  // PERFORMANCE MONITORING
+  // ============================================
+  
+  function monitorPerformance() {
+    if ('performance' in window) {
+      window.addEventListener('load', () => {
+        const perfData = performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log(`Page Load Time: ${pageLoadTime}ms`);
+      });
+    }
+  }
+
+  // ============================================
+  // ACCESSIBILITY IMPROVEMENTS
+  // ============================================
+  
+  function improveAccessibility() {
+    // Add ARIA labels
+    const tabs = document.querySelectorAll('.mc-tab');
+    tabs.forEach((tab, index) => {
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', tab.classList.contains('active'));
+      tab.setAttribute('tabindex', tab.classList.contains('active') ? '0' : '-1');
+    });
+
+    const boxes = document.querySelectorAll('.mc-box');
+    boxes.forEach((box, index) => {
+      box.setAttribute('role', 'tabpanel');
+      box.setAttribute('aria-hidden', !box.classList.contains('active'));
     });
   }
 
   // ============================================
-  // HANDLE WINDOW RESIZE
+  // LOCAL STORAGE (Save tab state)
+  // ============================================
+  
+  function saveTabState() {
+    const tabs = document.querySelectorAll('.mc-tab');
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        localStorage.setItem('activeTab', index);
+      });
+    });
+  }
+
+  function loadTabState() {
+    const savedTab = localStorage.getItem('activeTab');
+    if (savedTab !== null) {
+      switchTab(parseInt(savedTab));
+    }
+  }
+
+  // ============================================
+  // SMOOTH SCROLL FOR ANCHORS
+  // ============================================
+  
+  function initSmoothScroll() {
+    const links = document.querySelectorAll('a[href^="#"]');
+    
+    links.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        
+        e.preventDefault();
+        
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
+  // ============================================
+  // WINDOW RESIZE HANDLER
   // ============================================
   
   let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      // Reinit parallax on resize
-      if (window.innerWidth >= 768) {
-        initParallaxHero();
-      }
-    }, 250);
+  window.addEventListener('resize', debounce(() => {
+    console.log('Window resized');
+    // Add any resize-specific logic here
+  }, 250));
+
+  // ============================================
+  // VISIBILITY CHANGE HANDLER
+  // ============================================
+  
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      console.log('Tab is hidden');
+    } else {
+      console.log('Tab is visible');
+    }
   });
+
+  // Initialize additional features
+  improveAccessibility();
+  initSmoothScroll();
+  initProjectCards();
+  
+  // Optional: Load saved tab state
+  // loadTabState();
+  // saveTabState();
+
+  // Optional: Monitor performance
+  // monitorPerformance();
 
 })();
