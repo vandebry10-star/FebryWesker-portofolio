@@ -4,427 +4,383 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FebryWesker Portfolio - Minecraft UI Theme">
+  <meta name="description" content="FebryWesker Portfolio - Minecraft Theme">
   <meta name="author" content="FebryWesker (Azbry)">
-  <meta name="keywords" content="portfolio, developer, web games, whatsapp bot, minecraft theme">
   <title>FebryWesker - Minecraft Portfolio</title>
   
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%235cb85c' width='100' height='100'/%3E%3C/svg%3E">
-  
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css">
-  
-  <!-- Font Awesome (Optional - for icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-  <!-- Back to Top Button -->
-  <div class="mc-back" aria-label="Back to top">
-    ↑
+  <!-- Minecraft Animated Background -->
+  <div class="mc-sky"></div>
+  <div class="mc-clouds"></div>
+  <div class="mc-particles" id="particles"></div>
+
+  <!-- Navigation Bar with Shortcuts -->
+  <nav class="mc-navbar">
+    <div class="mc-nav-container">
+      <div class="mc-logo">⛏ FEBRYWESKER</div>
+      <div class="mc-nav-links">
+        <a href="#home" class="mc-nav-btn">HOME</a>
+        <a href="#about" class="mc-nav-btn">ABOUT</a>
+        <a href="#skills" class="mc-nav-btn">SKILLS</a>
+        <a href="#projects" class="mc-nav-btn">PROJECTS</a>
+        <a href="#contact" class="mc-nav-btn">CONTACT</a>
+      </div>
+      <button class="mc-mobile-toggle" id="mobile-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mc-mobile-menu" id="mobile-menu">
+    <a href="#home" class="mc-mobile-link">HOME</a>
+    <a href="#about" class="mc-mobile-link">ABOUT</a>
+    <a href="#skills" class="mc-mobile-link">SKILLS</a>
+    <a href="#projects" class="mc-mobile-link">PROJECTS</a>
+    <a href="#contact" class="mc-mobile-link">CONTACT</a>
   </div>
 
-  <!-- Main Container -->
-  <div class="container">
-    
-    <!-- Header -->
-    <header class="mc-header">
-      <h1 class="mc-title">FEBRYWESKER</h1>
-      <p class="mc-subtitle">Developer • Builder • Creator</p>
-    </header>
-
-    <!-- Navigation Tabs -->
-    <nav class="mc-tabs" role="tablist">
-      <div class="mc-tab active" onclick="switchTab(0)" role="tab" aria-selected="true" tabindex="0">
-        Home
-      </div>
-      <div class="mc-tab" onclick="switchTab(1)" role="tab" aria-selected="false" tabindex="-1">
-        About
-      </div>
-      <div class="mc-tab" onclick="switchTab(2)" role="tab" aria-selected="false" tabindex="-1">
-        Skills
-      </div>
-      <div class="mc-tab" onclick="switchTab(3)" role="tab" aria-selected="false" tabindex="-1">
-        Projects
-      </div>
-      <div class="mc-tab" onclick="switchTab(4)" role="tab" aria-selected="false" tabindex="-1">
-        Contact
-      </div>
-    </nav>
-
-    <!-- Tab Content: Home -->
-    <div class="mc-box active" id="tab-0" role="tabpanel">
-      <div class="mc-section-title">Welcome</div>
-      
-      <div style="text-align: center; padding: 40px 20px;">
-        <div style="font-size: 24px; margin-bottom: 20px; text-shadow: 2px 2px 0px #3f3f3f;">
-          Professional Web & Bot Developer
+  <!-- Hero Section -->
+  <section id="home" class="mc-section mc-hero">
+    <div class="mc-container">
+      <div class="mc-hero-content">
+        <div class="mc-profile-box">
+          <img src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/profile.png" alt="Profile" class="mc-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect fill=%22%237cbd52%22 width=%2264%22 height=%2264%22/%3E%3Crect fill=%22%235e9943%22 x=%2216%22 y=%2216%22 width=%2232%22 height=%2232%22/%3E%3C/svg%3E'">
         </div>
-        <div style="font-size: 14px; color: #aaa; margin-bottom: 30px; line-height: 1.8;">
-          Crafting elegant, high-performance solutions<br>
-          Specializing in lightweight web games & WhatsApp bots
+        <h1 class="mc-title">FEBRYWESKER</h1>
+        <div class="mc-subtitle">
+          <span class="mc-typing" id="typing"></span>
         </div>
-        <a href="#" onclick="switchTab(4); return false;" class="mc-button mc-button-green">
-          Get In Touch
-        </a>
-        <a href="#" onclick="switchTab(3); return false;" class="mc-button mc-button-blue">
-          View Projects
-        </a>
-      </div>
-
-      <div class="mc-section-title">Quick Info</div>
-      
-      <div class="mc-list-item">
-        <div class="mc-icon">🎮</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Status</div>
-          <div style="font-size: 12px; color: #aaa;">Active Developer</div>
+        <p class="mc-description">
+          Professional Web & Bot Developer<br>
+          Crafting Minecraft-style experiences with modern technology
+        </p>
+        <div class="mc-xp-bar">
+          <div class="mc-xp-fill"></div>
+          <span class="mc-xp-text">Level 85 Developer</span>
         </div>
-      </div>
-
-      <div class="mc-list-item">
-        <div class="mc-icon">🌍</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Region</div>
-          <div style="font-size: 12px; color: #aaa;">Indonesia</div>
-        </div>
-      </div>
-
-      <div class="mc-list-item">
-        <div class="mc-icon">🔗</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Portfolio</div>
-          <div style="font-size: 12px; color: #aaa;">febrydev.web.id</div>
+        <div class="mc-hero-buttons">
+          <a href="#contact" class="mc-btn mc-btn-green">
+            <i class="fas fa-paper-plane"></i> GET IN TOUCH
+          </a>
+          <a href="#projects" class="mc-btn mc-btn-blue">
+            <i class="fas fa-folder-open"></i> VIEW PROJECTS
+          </a>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Tab Content: About -->
-    <div class="mc-box" id="tab-1" role="tabpanel">
-      <div class="mc-section-title">About Me</div>
+  <!-- About Section -->
+  <section id="about" class="mc-section">
+    <div class="mc-container">
+      <h2 class="mc-section-title">
+        <i class="fas fa-user"></i> ABOUT ME
+      </h2>
       
-      <div style="font-size: 14px; color: #fff; line-height: 1.8; margin-bottom: 20px;">
-        Hello! I'm <span style="color: #5cb85c;">FebryWesker</span>, a passionate developer specializing in 
-        <span style="color: #5890d8;">lightweight web games</span> and 
-        <span style="color: #d85858;">WhatsApp Bot (Azbry-MD)</span>.
-      </div>
+      <div class="mc-grid-2">
+        <div class="mc-card mc-card-grass">
+          <div class="mc-card-header">
+            <i class="fas fa-code"></i> WHO AM I?
+          </div>
+          <div class="mc-card-body">
+            <p>Hello! I'm <span class="mc-text-green">FebryWesker</span>, a passionate developer specializing in <span class="mc-text-blue">lightweight web games</span> and <span class="mc-text-red">WhatsApp Bot (Azbry-MD)</span>.</p>
+            <p>I focus on creating clean, responsive, and fast interfaces with the perfect balance between performance and aesthetics.</p>
+          </div>
+        </div>
 
-      <div style="font-size: 14px; color: #aaa; line-height: 1.8; margin-bottom: 30px;">
-        I focus on creating clean, responsive, and fast interfaces with the perfect balance 
-        between performance and aesthetics. Always eager to learn the latest technologies 
-        and apply them to personal projects, continuously improving quality, efficiency, 
-        and user experience in every product I develop.
-      </div>
-
-      <div class="mc-section-title">Personal Info</div>
-
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #5cb85c; color: #fff;">💼</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Specialization</div>
-          <div style="font-size: 12px; color: #aaa;">Web Games & WhatsApp Bot Development</div>
+        <div class="mc-card mc-card-stone">
+          <div class="mc-card-header">
+            <i class="fas fa-info-circle"></i> QUICK INFO
+          </div>
+          <div class="mc-card-body">
+            <div class="mc-info-item">
+              <span class="mc-info-label">Status:</span>
+              <span class="mc-info-value">Active Developer</span>
+            </div>
+            <div class="mc-info-item">
+              <span class="mc-info-label">Region:</span>
+              <span class="mc-info-value">Indonesia</span>
+            </div>
+            <div class="mc-info-item">
+              <span class="mc-info-label">Portfolio:</span>
+              <span class="mc-info-value">febrydev.web.id</span>
+            </div>
+            <div class="mc-info-item">
+              <span class="mc-info-label">Experience:</span>
+              <span class="mc-info-value">3+ Years</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #5890d8; color: #fff;">🎯</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Focus</div>
-          <div style="font-size: 12px; color: #aaa;">Performance & User Experience</div>
+      <div class="mc-card mc-card-diamond">
+        <div class="mc-card-header">
+          <i class="fas fa-star"></i> INTERESTS & EXPERTISE
         </div>
-      </div>
-
-      <div class="mc-section-title">Interests</div>
-      
-      <div style="margin-bottom: 15px;">
-        <span class="mc-tag">Web Games</span>
-        <span class="mc-tag">UI/UX Design</span>
-        <span class="mc-tag">Performance</span>
-        <span class="mc-tag">Open Source</span>
-        <span class="mc-tag">WhatsApp Bot</span>
-        <span class="mc-tag">API Development</span>
-        <span class="mc-tag">Responsive Design</span>
-        <span class="mc-tag">Clean Code</span>
-      </div>
-
-      <div class="mc-section-title">Experience Level</div>
-      
-      <div style="margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 12px;">Web Development</span>
-          <span style="font-size: 12px; color: #5cb85c;" class="mc-slider-value">85%</span>
-        </div>
-        <div class="mc-slider">
-          <div class="mc-slider-thumb" style="left: 85%;"></div>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 12px;">Bot Development</span>
-          <span style="font-size: 12px; color: #5cb85c;" class="mc-slider-value">90%</span>
-        </div>
-        <div class="mc-slider">
-          <div class="mc-slider-thumb" style="left: 90%;"></div>
-        </div>
-      </div>
-
-      <div style="margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-          <span style="font-size: 12px;">UI/UX Design</span>
-          <span style="font-size: 12px; color: #5cb85c;" class="mc-slider-value">75%</span>
-        </div>
-        <div class="mc-slider">
-          <div class="mc-slider-thumb" style="left: 75%;"></div>
+        <div class="mc-card-body">
+          <div class="mc-tags">
+            <span class="mc-tag mc-tag-red">Web Games</span>
+            <span class="mc-tag mc-tag-blue">UI/UX Design</span>
+            <span class="mc-tag mc-tag-yellow">Performance</span>
+            <span class="mc-tag mc-tag-green">Open Source</span>
+            <span class="mc-tag mc-tag-purple">WhatsApp Bot</span>
+            <span class="mc-tag mc-tag-orange">API Development</span>
+            <span class="mc-tag mc-tag-cyan">Responsive Design</span>
+            <span class="mc-tag mc-tag-pink">Clean Code</span>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Tab Content: Skills -->
-    <div class="mc-box" id="tab-2" role="tabpanel">
-      <div class="mc-section-title">Technical Skills</div>
+  <!-- Skills Section -->
+  <section id="skills" class="mc-section">
+    <div class="mc-container">
+      <h2 class="mc-section-title">
+        <i class="fas fa-hammer"></i> MY SKILLS
+      </h2>
       
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #3776ab; color: #fff;">🐍</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Python</div>
-          <div style="font-size: 12px; color: #aaa;">Scripting & Automation</div>
+      <div class="mc-grid-4">
+        <div class="mc-skill-card" data-skill="python">
+          <div class="mc-skill-icon" style="background: #3776ab;">
+            <i class="fab fa-python"></i>
+          </div>
+          <h3 class="mc-skill-name">Python</h3>
+          <p class="mc-skill-desc">Scripting & Automation</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 85%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #f7df1e; color: #000;">JS</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">JavaScript</div>
-          <div style="font-size: 12px; color: #aaa;">Interactive UI Development</div>
+        <div class="mc-skill-card" data-skill="javascript">
+          <div class="mc-skill-icon" style="background: #f7df1e; color: #000;">
+            <i class="fab fa-js"></i>
+          </div>
+          <h3 class="mc-skill-name">JavaScript</h3>
+          <p class="mc-skill-desc">Interactive UI</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 90%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #339933; color: #fff;">📦</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Node.js</div>
-          <div style="font-size: 12px; color: #aaa;">Runtime for Bot Development</div>
+        <div class="mc-skill-card" data-skill="nodejs">
+          <div class="mc-skill-icon" style="background: #339933;">
+            <i class="fab fa-node-js"></i>
+          </div>
+          <h3 class="mc-skill-name">Node.js</h3>
+          <p class="mc-skill-desc">Bot Development</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 88%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #e34f26; color: #fff;">H</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">HTML5</div>
-          <div style="font-size: 12px; color: #aaa;">Semantic Structure</div>
+        <div class="mc-skill-card" data-skill="html">
+          <div class="mc-skill-icon" style="background: #e34f26;">
+            <i class="fab fa-html5"></i>
+          </div>
+          <h3 class="mc-skill-name">HTML5</h3>
+          <p class="mc-skill-desc">Semantic Structure</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 95%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #1572b6; color: #fff;">C</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">CSS3</div>
-          <div style="font-size: 12px; color: #aaa;">Advanced Styling & Animations</div>
+        <div class="mc-skill-card" data-skill="css">
+          <div class="mc-skill-icon" style="background: #1572b6;">
+            <i class="fab fa-css3-alt"></i>
+          </div>
+          <h3 class="mc-skill-name">CSS3</h3>
+          <p class="mc-skill-desc">Advanced Styling</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 92%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #61dafb; color: #000;">⚛</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Next.js</div>
-          <div style="font-size: 12px; color: #aaa;">React Framework</div>
+        <div class="mc-skill-card" data-skill="react">
+          <div class="mc-skill-icon" style="background: #61dafb; color: #000;">
+            <i class="fab fa-react"></i>
+          </div>
+          <h3 class="mc-skill-name">Next.js</h3>
+          <p class="mc-skill-desc">React Framework</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 80%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #8b5cf6; color: #fff;">🧠</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Problem Solving</div>
-          <div style="font-size: 12px; color: #aaa;">Analytical Thinking & Debugging</div>
+        <div class="mc-skill-card" data-skill="problem">
+          <div class="mc-skill-icon" style="background: #8b5cf6;">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3 class="mc-skill-name">Problem Solving</h3>
+          <p class="mc-skill-desc">Analytical Thinking</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 87%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
 
-      <div class="mc-list-item">
-        <div class="mc-icon" style="background: #ec4899; color: #fff;">🔌</div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">API Development</div>
-          <div style="font-size: 12px; color: #aaa;">RESTful Services & Integration</div>
+        <div class="mc-skill-card" data-skill="api">
+          <div class="mc-skill-icon" style="background: #ec4899;">
+            <i class="fas fa-plug"></i>
+          </div>
+          <h3 class="mc-skill-name">API Dev</h3>
+          <p class="mc-skill-desc">RESTful Services</p>
+          <div class="mc-skill-bar">
+            <div class="mc-skill-progress" style="width: 85%"></div>
+          </div>
         </div>
-        <div class="mc-toggle">ON</div>
-      </div>
-
-      <div class="mc-section-title">Tools & Technologies</div>
-
-      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-        <span class="mc-tag">Git & GitHub</span>
-        <span class="mc-tag">VS Code</span>
-        <span class="mc-tag">Tailwind CSS</span>
-        <span class="mc-tag">Vercel</span>
-        <span class="mc-tag">npm/yarn</span>
-        <span class="mc-tag">Postman</span>
-        <span class="mc-tag">Chrome DevTools</span>
-        <span class="mc-tag">Figma</span>
       </div>
     </div>
+  </section>
 
-    <!-- Tab Content: Projects -->
-    <div class="mc-box" id="tab-3" role="tabpanel">
-      <div class="mc-section-title">My Projects</div>
+  <!-- Projects Section -->
+  <section id="projects" class="mc-section">
+    <div class="mc-container">
+      <h2 class="mc-section-title">
+        <i class="fas fa-box-open"></i> MY PROJECTS
+      </h2>
       
-      <div class="mc-grid">
-        <!-- Project 1: Azbry Minigame -->
-        <div class="mc-project" onclick="window.open('https://azbryminigamess.vercel.app', '_blank')">
-          <img 
-            src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/minigame.png" 
-            alt="Azbry Minigame Screenshot" 
-            class="mc-project-img" 
-            onerror="this.style.background='#5cb85c'; this.alt='Minigame'"
-          >
-          <div class="mc-project-title">Azbry Minigame</div>
-          <div class="mc-project-desc">
-            Collection of lightweight browser games including Word Connect, Tap Runner, 
-            Guess Picture, and more. Built with pure HTML, CSS, and JavaScript for 
-            optimal performance.
+      <div class="mc-grid-3">
+        <div class="mc-project-card" onclick="window.open('https://azbryminigamess.vercel.app', '_blank')">
+          <div class="mc-project-image">
+            <img src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/minigame.png" alt="Azbry Minigame" onerror="this.style.background='#5cb85c'">
+            <div class="mc-project-overlay">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
           </div>
-          <div>
-            <span class="mc-tag">HTML</span>
-            <span class="mc-tag">CSS</span>
-            <span class="mc-tag">JavaScript</span>
-            <span class="mc-tag">Responsive</span>
-          </div>
-        </div>
-
-        <!-- Project 2: Azbry-MD Bot -->
-        <div class="mc-project" onclick="window.open('https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe', '_blank')">
-          <img 
-            src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/bot.png" 
-            alt="Azbry-MD Bot Screenshot" 
-            class="mc-project-img" 
-            onerror="this.style.background='#5890d8'; this.alt='WhatsApp Bot'"
-          >
-          <div class="mc-project-title">Azbry-MD</div>
-          <div class="mc-project-desc">
-            Modular WhatsApp Bot with extensive features including games, utilities, 
-            and entertainment commands. Easy to deploy and customize with clean 
-            architecture.
-          </div>
-          <div>
-            <span class="mc-tag">Node.js</span>
-            <span class="mc-tag">REST API</span>
-            <span class="mc-tag">WhatsApp</span>
-            <span class="mc-tag">Modular</span>
+          <div class="mc-project-content">
+            <h3 class="mc-project-title">Azbry Minigame</h3>
+            <p class="mc-project-desc">Collection of lightweight browser games: Word Connect, Tap Runner, Guess Picture, and more.</p>
+            <div class="mc-project-tags">
+              <span class="mc-tag mc-tag-red">HTML</span>
+              <span class="mc-tag mc-tag-blue">CSS</span>
+              <span class="mc-tag mc-tag-yellow">JavaScript</span>
+            </div>
+            <button class="mc-btn mc-btn-full mc-btn-green">
+              <i class="fas fa-gamepad"></i> PLAY NOW
+            </button>
           </div>
         </div>
 
-        <!-- Project 3: Azbry Shop -->
-        <div class="mc-project" onclick="window.open('https://azbry.my.id', '_blank')">
-          <img 
-            src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/buy.png" 
-            alt="Azbry Shop Screenshot" 
-            class="mc-project-img" 
-            onerror="this.style.background='#d85858'; this.alt='E-commerce'"
-          >
-          <div class="mc-project-title">Azbry Shop</div>
-          <div class="mc-project-desc">
-            Modern e-commerce platform with seamless shopping experience, secure 
-            payment integration, and responsive design. Built with Next.js for 
-            optimal performance.
+        <div class="mc-project-card" onclick="window.open('https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe', '_blank')">
+          <div class="mc-project-image">
+            <img src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/bot.png" alt="Azbry-MD Bot" onerror="this.style.background='#5890d8'">
+            <div class="mc-project-overlay">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
           </div>
-          <div>
-            <span class="mc-tag">Next.js</span>
-            <span class="mc-tag">E-commerce</span>
-            <span class="mc-tag">Payment</span>
-            <span class="mc-tag">Modern</span>
+          <div class="mc-project-content">
+            <h3 class="mc-project-title">Azbry-MD Bot</h3>
+            <p class="mc-project-desc">Modular WhatsApp Bot with games, utilities & entertainment. Easy to deploy and customize.</p>
+            <div class="mc-project-tags">
+              <span class="mc-tag mc-tag-green">Node.js</span>
+              <span class="mc-tag mc-tag-blue">REST API</span>
+              <span class="mc-tag mc-tag-purple">WhatsApp</span>
+            </div>
+            <button class="mc-btn mc-btn-full mc-btn-blue">
+              <i class="fab fa-whatsapp"></i> JOIN GROUP
+            </button>
+          </div>
+        </div>
+
+        <div class="mc-project-card" onclick="window.open('https://azbry.my.id', '_blank')">
+          <div class="mc-project-image">
+            <img src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/buy.png" alt="Azbry Shop" onerror="this.style.background='#d85858'">
+            <div class="mc-project-overlay">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+          </div>
+          <div class="mc-project-content">
+            <h3 class="mc-project-title">Azbry Shop</h3>
+            <p class="mc-project-desc">Modern e-commerce platform with seamless shopping experience and secure payment integration.</p>
+            <div class="mc-project-tags">
+              <span class="mc-tag mc-tag-cyan">Next.js</span>
+              <span class="mc-tag mc-tag-pink">E-commerce</span>
+              <span class="mc-tag mc-tag-orange">Payment</span>
+            </div>
+            <button class="mc-btn mc-btn-full mc-btn-red">
+              <i class="fas fa-shopping-cart"></i> VISIT STORE
+            </button>
           </div>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="https://github.com/vandebry10-star" target="_blank" class="mc-button mc-button-blue">
-          View More on GitHub →
+      <div class="mc-center">
+        <a href="https://github.com/vandebry10-star" target="_blank" class="mc-btn mc-btn-large mc-btn-blue">
+          <i class="fab fa-github"></i> VIEW MORE ON GITHUB
         </a>
       </div>
     </div>
+  </section>
 
-    <!-- Tab Content: Contact -->
-    <div class="mc-box" id="tab-4" role="tabpanel">
-      <div class="mc-section-title">Get In Touch</div>
+  <!-- Contact Section -->
+  <section id="contact" class="mc-section">
+    <div class="mc-container">
+      <h2 class="mc-section-title">
+        <i class="fas fa-envelope"></i> GET IN TOUCH
+      </h2>
       
-      <div style="text-align: center; font-size: 14px; color: #fff; line-height: 1.8; margin-bottom: 30px;">
-        Need help building lightweight games, modern landing pages, or WhatsApp bots?<br>
-        Let's collaborate and create something amazing together!
+      <div class="mc-contact-intro">
+        <p>Need help building lightweight games, modern landing pages, or WhatsApp bots?</p>
+        <p>Let's collaborate and create something amazing together!</p>
       </div>
 
-      <div class="mc-list-item" onclick="window.open('https://github.com/vandebry10-star', '_blank')">
-        <div class="mc-icon" style="background: #000; color: #fff;">
-          <i class="fab fa-github"></i>
+      <div class="mc-grid-2">
+        <div class="mc-contact-card" onclick="window.open('https://github.com/vandebry10-star', '_blank')">
+          <div class="mc-contact-icon" style="background: #000;">
+            <i class="fab fa-github"></i>
+          </div>
+          <h3>GitHub Profile</h3>
+          <p>github.com/vandebry10-star</p>
+          <div class="mc-arrow">→</div>
         </div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">GitHub Profile</div>
-          <div style="font-size: 12px; color: #aaa;">github.com/vandebry10-star</div>
-        </div>
-        <div style="font-size: 20px;">→</div>
-      </div>
 
-      <div class="mc-list-item" onclick="window.location.href='mailto:febrywesker@dev.com'">
-        <div class="mc-icon" style="background: #d85858; color: #fff;">
-          <i class="fas fa-envelope"></i>
+        <div class="mc-contact-card" onclick="window.location.href='mailto:febrywesker@dev.com'">
+          <div class="mc-contact-icon" style="background: #d85858;">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <h3>Email</h3>
+          <p>febrywesker@dev.com</p>
+          <div class="mc-arrow">→</div>
         </div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Email</div>
-          <div style="font-size: 12px; color: #aaa;">febrywesker@dev.com</div>
-        </div>
-        <div style="font-size: 20px;">→</div>
-      </div>
 
-      <div class="mc-list-item" onclick="window.open('https://febrydev.web.id', '_blank')">
-        <div class="mc-icon" style="background: #5cb85c; color: #fff;">
-          <i class="fas fa-globe"></i>
+        <div class="mc-contact-card" onclick="window.open('https://febrydev.web.id', '_blank')">
+          <div class="mc-contact-icon" style="background: #5cb85c;">
+            <i class="fas fa-globe"></i>
+          </div>
+          <h3>Portfolio Website</h3>
+          <p>febrydev.web.id</p>
+          <div class="mc-arrow">→</div>
         </div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">Portfolio Website</div>
-          <div style="font-size: 12px; color: #aaa;">febrydev.web.id</div>
-        </div>
-        <div style="font-size: 20px;">→</div>
-      </div>
 
-      <div class="mc-list-item" onclick="window.open('https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe', '_blank')">
-        <div class="mc-icon" style="background: #25d366; color: #fff;">
-          <i class="fab fa-whatsapp"></i>
+        <div class="mc-contact-card" onclick="window.open('https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe', '_blank')">
+          <div class="mc-contact-icon" style="background: #25d366;">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <h3>WhatsApp Group</h3>
+          <p>Join Azbry-MD Community</p>
+          <div class="mc-arrow">→</div>
         </div>
-        <div style="flex: 1;">
-          <div style="font-size: 14px; margin-bottom: 4px;">WhatsApp Group</div>
-          <div style="font-size: 12px; color: #aaa;">Join Azbry-MD Community</div>
-        </div>
-        <div style="font-size: 20px;">→</div>
-      </div>
-
-      <div class="mc-section-title">Social Media</div>
-
-      <div style="text-align: center; margin-top: 20px;">
-        <a href="https://github.com/vandebry10-star" target="_blank" class="mc-button">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="mailto:febrywesker@dev.com" class="mc-button">
-          <i class="fas fa-envelope"></i> Email
-        </a>
       </div>
     </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="mc-footer">
+  <!-- Footer -->
+  <footer class="mc-footer">
+    <div class="mc-container">
       <p>© 2024 FebryWesker • Built with Minecraft UI Style</p>
-      <p style="margin-top: 8px; font-size: 10px; color: #666;">
-        Tip: Use arrow keys or number keys (1-5) to navigate tabs
-      </p>
-    </footer>
+      <p class="mc-footer-tip">Tip: Click sounds enabled! 🔊</p>
+    </div>
+  </footer>
 
-  </div>
+  <!-- Back to Top -->
+  <button class="mc-back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
-  <!-- JavaScript -->
   <script src="script.js"></script>
 </body>
-          </html>
+</html>
