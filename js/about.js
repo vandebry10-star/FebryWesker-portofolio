@@ -1,12 +1,18 @@
 /**
  * about.js: Pinned narrative reveal
+ *
+ * Budget diperpanjang + hold buffer 10% di awal :
+ * fast-scroller butuh waktu sadar section ke-pin sebelum animasi mulai.
+ * Tanpa buffer, animasi lewat sebelum mata mereka catch up.
+ *
  * Stages (scrub timeline):
- *   0.00 to 0.20: quote line 1
- *   0.12 to 0.32: quote line 2
- *   0.24 to 0.44: quote line 3
- *   0.40 to 0.58: sub paragraph
- *   0.55 to 0.78: stats grid stagger
- *   0.72 to 0.86: meta line
+ *   0.00 to 0.10: HOLD (pin grab, no animation)
+ *   0.10 to 0.28: quote line 1
+ *   0.20 to 0.38: quote line 2
+ *   0.30 to 0.48: quote line 3
+ *   0.46 to 0.62: sub paragraph
+ *   0.58 to 0.78: stats grid stagger
+ *   0.74 to 0.86: meta line
  *   0.82 to 1.00: interest tags stagger
  *
  * Always visible (no opacity 0 on init):
@@ -52,7 +58,10 @@ export function initAbout() {
   gsap.set(tags,   { opacity: 0, y: 14, scale: 0.88 });
 
   const isMobile = window.innerWidth <= 900;
-  const budget = isMobile ? 1.2 : 1.6;
+  // Diperpanjang dari 1.2/1.6 : kasih fast-scroller waktu sadar
+  // section ke-pin sebelum animasi selesai. Total scroll ~2.4 viewport
+  // di desktop ~= 2.5x panjang section biasa.
+  const budget = isMobile ? 1.8 : 2.4;
 
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -67,16 +76,17 @@ export function initAbout() {
     defaults: { ease: 'power2.out' },
   });
 
-  tl.to(lines[0], { opacity: 1, y: 0, duration: 0.20 }, 0.00)
-    .to(lines[1], { opacity: 1, y: 0, duration: 0.20 }, 0.12)
-    .to(lines[2], { opacity: 1, y: 0, duration: 0.20 }, 0.24)
-    .to(sub,    { opacity: 1, y: 0, duration: 0.18 }, 0.40)
+  // Semua position di-shift +0.10 dari versi lama : 0-0.10 = hold buffer.
+  tl.to(lines[0], { opacity: 1, y: 0, duration: 0.18 }, 0.10)
+    .to(lines[1], { opacity: 1, y: 0, duration: 0.18 }, 0.20)
+    .to(lines[2], { opacity: 1, y: 0, duration: 0.18 }, 0.30)
+    .to(sub,    { opacity: 1, y: 0, duration: 0.16 }, 0.46)
     .to(stats,  {
       opacity: 1, y: 0, scale: 1,
-      duration: 0.22,
+      duration: 0.20,
       stagger: 0.04,
-    }, 0.55)
-    .to(meta,   { opacity: 1, y: 0, duration: 0.14 }, 0.72)
+    }, 0.58)
+    .to(meta,   { opacity: 1, y: 0, duration: 0.12 }, 0.74)
     .to(tags,   {
       opacity: 1, y: 0, scale: 1,
       duration: 0.18,
