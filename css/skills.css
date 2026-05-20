@@ -1,0 +1,397 @@
+/* ════════════════════════════════════════════
+   skills.css: Tier-based stack visualization
+   3 tiers: Specialty, Core, Toolkit
+   IntersectionObserver entrance, no GSAP needed
+   ════════════════════════════════════════════ */
+
+/* ── Section wrapper (positioning context utk deco) ─ */
+.fw-skills-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Giant deco number "02" ────────────────────────── */
+.fw-skills-deco-num {
+  position: absolute;
+  top: 80px;
+  right: -3vw;
+  font-family: var(--font-display);
+  font-size: clamp(180px, 26vw, 380px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.05);
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+/* ── Vertical anchor "SKILLS" (kiri) ───────────────── */
+.fw-skills-anchor {
+  position: absolute;
+  left: 32px;
+  top: 120px;
+  width: 1px;
+  height: 32vh;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(96,165,250,0.32) 50%,
+    transparent 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+.fw-skills-anchor::before {
+  content: 'SKILLS';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: rgba(96,165,250,0.5);
+  white-space: nowrap;
+  background: var(--bg, #06030f);
+  padding: 0 12px;
+}
+
+@media (max-width: 1100px) {
+  .fw-skills-deco-num { font-size: clamp(140px, 22vw, 260px); }
+}
+@media (max-width: 900px) {
+  .fw-skills-anchor { display: none; }
+  .fw-skills-deco-num {
+    font-size: clamp(120px, 28vw, 200px);
+    top: 40px;
+    right: -6vw;
+    opacity: 0.7;
+  }
+}
+@media (max-width: 480px) {
+  .fw-skills-deco-num { display: none; }
+}
+
+/* ── Section intro ─────────────────────────── */
+.fw-skills-intro {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text-3);
+  letter-spacing: 0.01em;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: -12px 0 40px;
+}
+
+/* ── Tier wrapper ──────────────────────────── */
+.fw-skills-tier {
+  margin-bottom: 44px;
+}
+.fw-skills-tier:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Tier label row ────────────────────────── */
+.fw-tier-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.fw-tier-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.18em;
+  opacity: 0.5;
+}
+.fw-tier-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-2);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.fw-tier-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--glass-border), transparent);
+}
+
+/* ── Tier grids ────────────────────────────── */
+.fw-tier-grid-specialty {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.fw-tier-grid-core {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.fw-tier-grid-toolkit {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* ════════════════════════════════════════════
+   TIER 1: FEATURED CARD (Specialty)
+   ════════════════════════════════════════════ */
+.fw-skill-featured {
+  position: relative;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(37,211,102,0.10), transparent 50%),
+    var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.4,0,0.2,1), border-color 0.25s;
+}
+.fw-skill-featured.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fw-skill-featured::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(37,211,102,0.55), transparent);
+}
+.fw-skill-featured:hover {
+  border-color: rgba(37,211,102,0.25);
+}
+
+.fw-featured-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #25D366;
+  background: rgba(37,211,102,0.10);
+  border: 1px solid rgba(37,211,102,0.3);
+  padding: 4px 9px;
+  border-radius: 99px;
+}
+
+.fw-featured-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.fw-featured-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(37,211,102,0.18);
+  flex-shrink: 0;
+}
+.fw-featured-title { min-width: 0; }
+.fw-featured-title h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+.fw-featured-title p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 520px;
+}
+
+.fw-featured-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.fw-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+/* ════════════════════════════════════════════
+   TIER 2: CORE CARDS
+   ════════════════════════════════════════════ */
+.fw-skill-core {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s, transform 0.25s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fw-skill-core.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.4,0,0.2,1), border-color 0.25s;
+}
+.fw-skill-core:hover {
+  border-color: rgba(255,255,255,0.14);
+  transform: translateY(-3px);
+}
+.fw-core-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 14px;
+}
+.fw-core-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+.fw-core-icon-duo { gap: 3px; }
+.fw-core-icon-duo img {
+  width: 19px;
+  height: 19px;
+}
+.fw-skill-core h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+.fw-skill-core p {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-3);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════
+   TIER 3: TOOLKIT CHIPS
+   ════════════════════════════════════════════ */
+.fw-skill-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+  opacity: 0;
+  transform: translateY(12px);
+}
+.fw-skill-chip.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.2s, background 0.2s;
+}
+.fw-skill-chip:hover {
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+}
+.fw-skill-chip img {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.fw-skill-chip i {
+  font-size: 16px;
+  color: var(--text-2);
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.fw-skill-chip span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .fw-skills-intro { margin-bottom: 32px; }
+  .fw-skills-tier { margin-bottom: 36px; }
+
+  .fw-featured-head {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .fw-featured-icon {
+    width: 54px;
+    height: 54px;
+  }
+  .fw-featured-icon i { font-size: 30px !important; }
+  .fw-featured-title h3 { font-size: 17px; }
+  .fw-featured-title p { font-size: 12px; }
+  .fw-featured-badge {
+    top: 14px;
+    right: 14px;
+    font-size: 8px;
+    padding: 3px 7px;
+  }
+
+  .fw-tier-grid-core {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .fw-tier-grid-toolkit {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .fw-skill-featured { padding: 22px 18px; }
+  .fw-tier-grid-toolkit {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .fw-skill-chip {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  .fw-skill-chip span { font-size: 11px; }
+}

@@ -1,0 +1,538 @@
+/* ════════════════════════════════════════════
+   hero.css — Hero section styles
+   ════════════════════════════════════════════ */
+
+#home {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Radial glow background (mirror about/contact) */
+.fw-hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 18% 30%, rgba(139,92,246,0.10), transparent 55%),
+    radial-gradient(ellipse at 82% 70%, rgba(236,72,153,0.07), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Giant deco number '00' (kanan, mirror about) ── */
+.fw-hero-deco-num {
+  position: absolute;
+  top: 50%;
+  right: -2vw;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(220px, 32vw, 480px);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.06);
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Vertical anchor 'HOME' (kiri, mirror about) ── */
+.fw-hero-anchor {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 38vh;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(139,92,246,0.35) 50%,
+    transparent 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+.fw-hero-anchor::before {
+  content: 'HOME';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  transform-origin: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: rgba(139,92,246,0.55);
+  white-space: nowrap;
+  background: var(--bg, #06030f);
+  padding: 0 12px;
+}
+
+/* ── Section label hero (mirror about-label) ── */
+.fw-hero-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  animation: fadeInUp 0.6s ease-out both;
+}
+.fw-hero-label::before { content: none; }
+.fw-hero-label i {
+  color: var(--purple);
+  font-size: 12px;
+}
+.fw-hero-label-sep {
+  width: 28px;
+  height: 1px;
+  background: rgba(255,255,255,0.18);
+}
+.fw-hero-label-sub {
+  color: var(--text-2);
+  letter-spacing: 0.18em;
+  position: relative;
+  padding-left: 14px;
+}
+.fw-hero-label-sub::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: breathe 2s ease-in-out infinite;
+  animation-play-state: var(--anim-play, running);
+}
+
+.fw-hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* On mobile: stack vertically, both sections visible */
+@media (max-width: 768px) {
+  .fw-hero {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    justify-items: center;
+    text-align: center;
+  }
+  .fw-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fw-hero-desc { max-width: 100%; }
+  .fw-hero-actions { justify-content: center; }
+}
+
+/* ── Badge ── */
+.fw-hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 99px;
+  padding: 5px 12px;
+  margin-bottom: 20px;
+  animation: fadeInUp 0.6s ease-out both;
+}
+.fw-hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: breathe 2s ease-in-out infinite;
+  animation-play-state: var(--anim-play, running);
+}
+
+/* ── Text ── */
+.fw-hero-greeting {
+  font-family: var(--font-body);
+  font-size: 16px; font-weight: 400;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.fw-hero-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(36px, 7vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  animation: fadeInUp 0.6s ease-out 0.15s both;
+}
+
+.fw-hero-typing-wrap {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 2.5vw, 20px);
+  font-weight: 500;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+  margin-bottom: 16px;
+  min-height: 30px;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+.fw-cursor {
+  display: inline-block;
+  width: 2px; height: 1em;
+  background: var(--purple);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+.fw-hero-desc {
+  font-size: 15px; font-weight: 400;
+  color: var(--text-2);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.6s ease-out 0.25s both;
+}
+
+/* ── XP Bar ── */
+.fw-xp-wrap {
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 480px;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+.fw-xp-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.fw-xp-label {
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.fw-xp-level {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.06em;
+}
+.fw-xp-track {
+  height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.fw-xp-fill {
+  height: 100%;
+  width: 74%;
+  background: var(--grad-brand);
+  border-radius: 99px;
+  box-shadow: 0 0 12px rgba(139,92,246,0.5);
+  animation: xpGrow 1.5s cubic-bezier(0.4,0,0.2,1) 0.8s both;
+}
+
+.fw-hero-actions {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  animation: fadeInUp 0.6s ease-out 0.35s both;
+}
+
+/* ── Hero visual (lanyard container) ── */
+.fw-hero-visual {
+  animation: fadeInUp 0.7s ease-out 0.2s both;
+  overflow: visible;
+}
+
+/* ════════════════════════════════════════════
+   LANYARD SCENE
+   ════════════════════════════════════════════ */
+
+/*
+  The scene is a relatively-positioned container.
+  - #lanyard-svg     → neck loop ∩ + 2 strands + D-ring, drawn by JS (overflow:visible)
+  - #lanyard-card    → the avatar card, absolutely positioned + draggable
+*/
+
+.fw-lanyard-scene {
+  position: relative;
+  width: 280px;
+  height: 420px;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+/* Top fade overlay: bleeds 20px ABOVE the scene (safely inside the row gap
+   on mobile, empty space on desktop) so the gradient can fade in from
+   transparent at the very top, hold solid through the strap's anchor, and
+   fade back to transparent at the bottom. No hard edge on either side. */
+/* Mobile-only fade overlay: covers the top of the strap so the anchor is
+   hidden in the row-gap. On desktop the navbar covers it instead. */
+@media (max-width: 768px) {
+  .fw-lanyard-scene::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -100vw;
+    right: -100vw;
+    height: 100px;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(6,3,15,0.55) 12%,
+      var(--bg, #06030f) 28%,
+      var(--bg, #06030f) 60%,
+      rgba(6,3,15,0.55) 82%,
+      rgba(6,3,15,0.18) 94%,
+      transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+}
+
+/* ── SVG lanyard strap ── */
+.fw-lanyard-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1;
+}
+.fw-strap-text {
+  letter-spacing: 1.6px;
+  text-rendering: geometricPrecision;
+  paint-order: stroke fill;
+  stroke: rgba(0,0,0,0.35);
+  stroke-width: 0.3;
+}
+
+/* ── Avatar card within lanyard scene ── */
+.fw-lanyard-scene .fw-avatar-card {
+  position: absolute;
+  /* JS sets left/top. Width inherited from .fw-avatar-card below. */
+  z-index: 2;
+  cursor: grab;
+  /* Rotate from top-center — where the clip/strap connects */
+  transform-origin: 50% 0%;
+  /* will-change di-set dynamic via JS saat drag : punya layer permanen
+     dgn shadow gede bikin compositor overhead saat scroll. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+.fw-lanyard-scene .fw-avatar-card:active {
+  cursor: grabbing;
+}
+
+/* ── Plastic clip holder di atas card (menggantung di hook lanyard) ── */
+.fw-card-clip {
+  width: 52px;
+  height: 22px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08) 0%,
+    rgba(255,255,255,0.04) 35%,
+    rgba(0,0,0,0.2) 70%,
+    rgba(0,0,0,0.35) 100%
+  );
+  border: 1px solid rgba(255,255,255,0.10);
+  border-top: 1px solid rgba(255,255,255,0.18);
+  /* Squarish plastic shape with rounded top */
+  border-radius: 8px 8px 5px 5px;
+  /* Push clip up so it overlaps the card's top edge */
+  margin: -28px auto 12px;
+  position: relative;
+  z-index: 4;
+  box-shadow:
+    0 3px 6px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.16);
+}
+/* Hole punch in plastic clip where the snap hook passes through */
+.fw-card-clip::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 6px;
+  background:
+    radial-gradient(ellipse at 50% 30%,
+      rgba(0,0,0,0.85) 0%,
+      rgba(0,0,0,0.6) 70%,
+      rgba(0,0,0,0.35) 100%);
+  border-radius: 99px;
+  box-shadow:
+    inset 0 1px 1px rgba(0,0,0,0.9),
+    inset 0 -1px 0 rgba(255,255,255,0.06);
+}
+/* Subtle reflective highlight along the top edge */
+.fw-card-clip::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.32) 50%,
+    transparent 100%);
+  border-radius: 99px;
+}
+
+/* ── Avatar card base: solid frame + drop shadow (no blur) ──
+   Shadow sederhana : sebelumnya 5-layer (termasuk 0 30px 56px) bikin
+   repaint mahal tiap kali parent berskala/scroll. Sekarang 2-layer
+   ringan + 1 inset highlight. Visual hampir sama, jauh lebih murah. */
+.fw-avatar-card {
+  width: 260px;
+  background: #14101f;
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.55),
+    0 4px 8px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.fw-avatar-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(139,92,246,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+.fw-avatar-img {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 0 4px rgba(139,92,246,0.2), 0 0 32px rgba(139,92,246,0.2);
+  margin-bottom: 14px;
+}
+.fw-avatar-name {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.fw-avatar-role {
+  font-size: 11px; font-weight: 400;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+.fw-avatar-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.fw-avatar-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 8px;
+}
+.fw-avatar-stat-val {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 900;
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+.fw-avatar-stat-label {
+  font-size: 9px; font-weight: 400;
+  color: var(--text-3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ── Mobile responsive ── */
+@media (max-width: 900px) {
+  .fw-hero-anchor { display: none; }
+  .fw-hero-deco-num {
+    font-size: clamp(160px, 36vw, 280px);
+    right: -8vw;
+    opacity: 0.7;
+  }
+}
+@media (max-width: 768px) {
+  .fw-lanyard-scene {
+    width: 210px;
+    height: 340px;
+  }
+  .fw-lanyard-scene .fw-avatar-card,
+  .fw-avatar-card {
+    width: 190px;
+    padding: 16px;
+    border-radius: var(--radius-lg);
+  }
+  .fw-avatar-img {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 10px;
+  }
+  .fw-avatar-name { font-size: 13px; }
+  .fw-avatar-role { font-size: 10px; margin-bottom: 12px; }
+  .fw-avatar-stat { padding: 6px; }
+  .fw-avatar-stat-val { font-size: 14px; }
+  .fw-avatar-stat-label { font-size: 8px; }
+  .fw-card-clip {
+    width: 42px;
+    height: 18px;
+    margin: -24px auto 10px;
+  }
+  .fw-card-clip::before { top: 5px; width: 11px; height: 5px; }
+  .fw-hero-label { font-size: 10px; gap: 10px; margin-bottom: 18px; }
+  .fw-hero-label-sep { width: 20px; }
+}
+@media (max-width: 480px) {
+  .fw-hero-deco-num { display: none; }
+  .fw-lanyard-scene {
+    width: 200px;
+    height: 330px;
+  }
+  .fw-lanyard-scene .fw-avatar-card,
+  .fw-avatar-card {
+    width: 180px;
+    max-width: 100%;
+  }
+}
+
+/* ── Matikan infinite animation di mobile ── */
+@media (max-width: 768px) {
+  .fw-typing-cursor { opacity: 1; animation: none; }
+  .fw-hero-badge::before { animation: none; }
+}

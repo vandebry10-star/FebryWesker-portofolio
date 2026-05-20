@@ -1,0 +1,40 @@
+/* ════════════════════════════════════════════
+   hero-mobile-patch.css v4.0
+   ════════════════════════════════════════════ */
+
+.fw-hero-badge {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  #home {
+    min-height: 100vh;
+    height: auto;
+    padding-top: calc(var(--nav-h, 64px) + 120px);
+    padding-bottom: 60px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .fw-hero {
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: 36px;
+    width: 100%;
+  }
+
+  .fw-hero-content {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  #home {
+    padding-top: calc(var(--nav-h, 64px) + 100px);
+    padding-bottom: 48px;
+  }
+
+  .fw-hero {
+    gap: 28px;
+  }
+}

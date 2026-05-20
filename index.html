@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FebryWesker | Web Developer &amp; Bot Creator from Indonesia">
+  <meta name="author" content="FebryWesker">
+  <title>Febry Wesker | Developer [newbie]</title>
+
+  <meta property="og:title" content="FebryWesker | Developer [newbie]">
+  <meta property="og:description" content="Web Developer, Bot Creator &amp; UI/UX Designer from Indonesia.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://febry.is-a.dev/">
+  <meta property="og:image" content="https://api.azbry.com/api/portofolio.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP + Lenis di head supaya tersedia sebelum JS module -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="css/base.css?v=35">
+  <link rel="stylesheet" href="css/hero.css?v=35">
+  <link rel="stylesheet" href="css/about.css?v=35">
+  <link rel="stylesheet" href="css/skills.css?v=35">
+  <link rel="stylesheet" href="css/projects.css?v=35">
+  <link rel="stylesheet" href="css/contact.css?v=35">
+  <link rel="stylesheet" href="css/loading.css?v=35">
+  <link rel="stylesheet" href="css/background.css?v=35">
+  <link rel="stylesheet" href="css/patches.css?v=35">
+  <link rel="stylesheet" href="css/hero-mobile-patch.css?v=35">
+  <link rel="stylesheet" href="css/scroll-ui.css?v=35">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+  <div id="fw-loader"></div>
+
+  <!-- NAVBAR -->
+  <nav class="fw-nav" id="navbar">
+    <div class="fw-nav-inner">
+      <a href="#home" class="fw-logo">Portfolio</a>
+      <div class="fw-nav-links">
+        <a href="#home"     class="fw-nav-link active">Home</a>
+        <a href="#about"    class="fw-nav-link">About</a>
+        <a href="#skills"   class="fw-nav-link">Skills</a>
+        <a href="#projects" class="fw-nav-link">Projects</a>
+        <a href="#contact"  class="fw-nav-link">Contact</a>
+      </div>
+      <a href="#contact" class="fw-nav-cta">Contact Me</a>
+      <button class="fw-nav-toggle" id="nav-toggle" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <div class="fw-mobile-menu" id="mobile-menu">
+    <a href="#home"     class="fw-mobile-link">Home</a>
+    <a href="#about"    class="fw-mobile-link">About</a>
+    <a href="#skills"   class="fw-mobile-link">Skills</a>
+    <a href="#projects" class="fw-mobile-link">Projects</a>
+    <a href="#contact"  class="fw-mobile-link">Contact</a>
+  </div>
+
+  <!-- ══════════════════ HERO ══════════════════ -->
+  <section id="home" class="fw-section fw-hero-section">
+    <div class="fw-hero-deco-num" aria-hidden="true">00</div>
+    <div class="fw-hero-anchor" aria-hidden="true"></div>
+    <div class="fw-container">
+      <div class="fw-hero">
+
+        <div class="fw-hero-content">
+          <div class="fw-section-label fw-hero-label">
+            <i class="fas fa-house"></i> Home
+            <span class="fw-hero-label-sep"></span>
+            <span class="fw-hero-label-sub">Available for Work</span>
+          </div>
+          <p class="fw-hero-greeting">Hello, I'm</p>
+          <h1 class="fw-hero-name"><span id="hero-name-text">Febry Wesker</span></h1>
+          <div class="fw-hero-typing-wrap">
+            <span id="typing"></span><span class="fw-cursor"></span>
+          </div>
+          <p class="fw-hero-desc">
+            Building fast, clean, and beautiful digital experiences.
+            From website development, to powerful WhatsApp bots and REST APIs.
+          </p>
+          <div class="fw-xp-wrap">
+            <div class="fw-xp-header">
+              <span class="fw-xp-label">Skill Level</span>
+              <span class="fw-xp-level">Lv. 148 · 74% to next</span>
+            </div>
+            <div class="fw-xp-track">
+              <div class="fw-xp-fill" id="xp-fill"></div>
+            </div>
+          </div>
+          <div class="fw-hero-actions">
+            <a href="#contact" class="fw-btn fw-btn-primary">
+              <i class="fas fa-paper-plane"></i> Get In Touch
+            </a>
+            <a href="#projects" class="fw-btn fw-btn-secondary">
+              <i class="fas fa-folder-open"></i> View Projects
+            </a>
+          </div>
+        </div>
+
+        <div class="fw-hero-visual">
+          <div class="fw-lanyard-scene" id="lanyard-scene">
+            <svg class="fw-lanyard-svg" id="lanyard-svg" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+              <defs>
+                <!-- Two strand paths set by JS -->
+                <path id="l-rope-L" fill="none" stroke-linecap="butt"/>
+                <path id="l-rope-R" fill="none" stroke-linecap="butt"/>
+
+                <!-- Webbing gradient: gives the strap a subtle cylindrical highlight -->
+                <linearGradient id="l-strap-grad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#3c1670"/>
+                  <stop offset="15%"  stop-color="#5b21b6"/>
+                  <stop offset="50%"  stop-color="#7c3aed"/>
+                  <stop offset="85%"  stop-color="#5b21b6"/>
+                  <stop offset="100%" stop-color="#3c1670"/>
+                </linearGradient>
+
+                <!-- Thin edge stitching color -->
+                <linearGradient id="l-strap-edge" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="rgba(255,255,255,0.0)"/>
+                  <stop offset="50%"  stop-color="rgba(255,255,255,0.28)"/>
+                  <stop offset="100%" stop-color="rgba(255,255,255,0.0)"/>
+                </linearGradient>
+
+                <!-- Woven pattern: tiny diagonal weave repeated along strap -->
+                <pattern id="l-weave" patternUnits="userSpaceOnUse" width="4" height="4" patternTransform="rotate(45)">
+                  <rect width="4" height="4" fill="transparent"/>
+                  <rect width="2" height="4" fill="rgba(255,255,255,0.045)"/>
+                </pattern>
+
+                <!-- D-ring metal gradient -->
+                <linearGradient id="l-dring-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#f4f4f8"/>
+                  <stop offset="35%"  stop-color="#cfcfd9"/>
+                  <stop offset="65%"  stop-color="#6b6b78"/>
+                  <stop offset="100%" stop-color="#3a3a44"/>
+                </linearGradient>
+
+                <!-- Snap hook metal gradient (darker) -->
+                <linearGradient id="l-hook-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#d4d4dc"/>
+                  <stop offset="50%"  stop-color="#8a8a95"/>
+                  <stop offset="100%" stop-color="#4a4a55"/>
+                </linearGradient>
+              </defs>
+
+              <!-- LEFT STRAND ───────────────────────── -->
+              <!-- drop shadow ply -->
+              <use href="#l-rope-L" stroke="rgba(0,0,0,0.55)" stroke-width="24" transform="translate(1.5,3)"/>
+              <!-- main strap body -->
+              <use href="#l-rope-L" stroke="url(#l-strap-grad)" stroke-width="22"/>
+              <!-- woven texture overlay -->
+              <use href="#l-rope-L" stroke="url(#l-weave)" stroke-width="22"/>
+              <!-- center spine highlight (thin, follows the curve) -->
+              <use href="#l-rope-L" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
+              <!-- printed brand text -->
+              <text class="fw-strap-text" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="700" fill="rgba(255,255,255,0.78)">
+                <textPath href="#l-rope-L" startOffset="0">
+                  FEBRYWESKER · DEVELOPER · FEBRYWESKER · DEVELOPER · FEBRYWESKER · DEVELOPER ·
+                </textPath>
+              </text>
+
+              <!-- RIGHT STRAND ──────────────────────── -->
+              <use href="#l-rope-R" stroke="rgba(0,0,0,0.55)" stroke-width="24" transform="translate(1.5,3)"/>
+              <use href="#l-rope-R" stroke="url(#l-strap-grad)" stroke-width="22"/>
+              <use href="#l-rope-R" stroke="url(#l-weave)" stroke-width="22"/>
+              <use href="#l-rope-R" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
+              <text class="fw-strap-text" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="700" fill="rgba(255,255,255,0.78)">
+                <textPath href="#l-rope-R" startOffset="0">
+                  AZBRY · WESKER-MD · AZBRY · WESKER-MD · AZBRY · WESKER-MD ·
+                </textPath>
+              </text>
+
+              <!-- D-ring + snap hook (positioned by JS) -->
+              <g id="l-dring">
+                <!-- Outer D-ring -->
+                <ellipse rx="16" ry="9" fill="none" stroke="url(#l-dring-grad)" stroke-width="4.5"/>
+                <ellipse rx="16" ry="9" fill="none" stroke="rgba(0,0,0,0.6)" stroke-width="0.8"/>
+                <!-- Snap hook below D-ring -->
+                <rect x="-3.5" y="6" width="7" height="14" rx="2" fill="url(#l-hook-grad)" stroke="rgba(0,0,0,0.5)" stroke-width="0.6"/>
+                <rect x="-2" y="9" width="4" height="2" fill="rgba(0,0,0,0.45)"/>
+              </g>
+            </svg>
+            <div class="fw-avatar-card" id="lanyard-card">
+              <div class="fw-card-clip"></div>
+              <img
+                src="https://cdn.jsdelivr.net/gh/vandebry-img/img@main/profile.png"
+                alt="FebryWesker"
+                class="fw-avatar-img"
+                draggable="false"
+                onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect fill=%22%237c3aed%22 width=%2264%22 height=%2264%22/%3E%3Ctext x=%2250%25%22 y=%2255%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2224%22%3EFW%3C/text%3E%3C/svg%3E'">
+              <div class="fw-avatar-name">FebryWesker</div>
+              <div class="fw-avatar-role">ideas don't build themselves</div>
+              <div class="fw-avatar-stats">
+                <div class="fw-avatar-stat"><div class="fw-avatar-stat-val">3+</div><div class="fw-avatar-stat-label">Years</div></div>
+                <div class="fw-avatar-stat"><div class="fw-avatar-stat-val">10+</div><div class="fw-avatar-stat-label">Projects</div></div>
+                <div class="fw-avatar-stat"><div class="fw-avatar-stat-val">8</div><div class="fw-avatar-stat-label">Skills</div></div>
+                <div class="fw-avatar-stat"><div class="fw-avatar-stat-val">∞</div><div class="fw-avatar-stat-label">Coffee :v</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ── /HERO ── -->
+
+  <!-- ══════════════════ ABOUT ══════════════════ -->
+  <section id="about" class="fw-about-section">
+    <div class="fw-about-pin" id="about-pin">
+      <div class="fw-about-deco-num" aria-hidden="true">01</div>
+      <div class="fw-about-anchor" aria-hidden="true"></div>
+      <div class="fw-about-container">
+
+        <div class="fw-section-label fw-about-label">
+          <i class="fas fa-user"></i> About
+          <span class="fw-about-label-sep"></span>
+          <span class="fw-about-label-sub">Who I Am</span>
+        </div>
+
+        <h2 class="fw-about-quote">
+          <span class="fw-about-line">I build interfaces</span>
+          <span class="fw-about-line">that balance <em>performance</em></span>
+          <span class="fw-about-line">and <em>aesthetics</em>.</span>
+        </h2>
+
+        <p class="fw-about-sub">
+          Fast, clean, and built to last. Specializing in web,
+          WhatsApp bots, and REST APIs.
+        </p>
+
+        <div class="fw-about-stats">
+          <div class="fw-about-stat">
+            <div class="fw-about-stat-val">3+</div>
+            <div class="fw-about-stat-label">Years</div>
+          </div>
+          <div class="fw-about-stat">
+            <div class="fw-about-stat-val">10+</div>
+            <div class="fw-about-stat-label">Projects</div>
+          </div>
+          <div class="fw-about-stat">
+            <div class="fw-about-stat-val">8</div>
+            <div class="fw-about-stat-label">Skills</div>
+          </div>
+          <div class="fw-about-stat">
+            <div class="fw-about-stat-val">∞</div>
+            <div class="fw-about-stat-label">Coffee</div>
+          </div>
+        </div>
+
+        <div class="fw-about-meta">
+          <span>Indonesia</span>
+          <span class="fw-about-meta-dot"></span>
+          <span class="fw-about-status">Active</span>
+          <span class="fw-about-meta-dot"></span>
+          <span>Web &amp; Bot Dev</span>
+        </div>
+
+        <div class="fw-about-interests">
+          <span class="fw-about-tag">Web Dev</span>
+          <span class="fw-about-tag">WhatsApp Bot</span>
+          <span class="fw-about-tag">UI/UX</span>
+          <span class="fw-about-tag">REST API</span>
+          <span class="fw-about-tag">Performance</span>
+          <span class="fw-about-tag">Clean Code</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ── /ABOUT ── -->
+
+  <!-- ══════════════════ SKILLS ══════════════════ -->
+  <section id="skills" class="fw-section fw-skills-section">
+    <div class="fw-skills-deco-num" aria-hidden="true">02</div>
+    <div class="fw-skills-anchor" aria-hidden="true"></div>
+    <div class="fw-container">
+
+      <div class="fw-section-label"><i class="fas fa-bolt"></i> Skills</div>
+      <h2 class="fw-section-title">My <span>Stack</span></h2>
+      <p class="fw-skills-intro">Daily tools, organized by depth, bukan persentase yang dibuat-buat.</p>
+
+      <!-- ── Tier 1: Specialty ── -->
+      <div class="fw-skills-tier" data-tier="specialty">
+        <div class="fw-tier-label">
+          <span class="fw-tier-num">01</span>
+          <span class="fw-tier-name">Specialty</span>
+          <span class="fw-tier-line"></span>
+        </div>
+
+        <div class="fw-tier-grid-specialty">
+          <article class="fw-skill-featured">
+            <div class="fw-featured-badge">Focus</div>
+            <div class="fw-featured-head">
+              <div class="fw-featured-icon" style="background:rgba(37,211,102,0.14);">
+                <i class="fab fa-whatsapp" style="font-size:36px;color:#25D366;"></i>
+              </div>
+              <div class="fw-featured-title">
+                <h3>WhatsApp Bot Development</h3>
+                <p>Modular bot systems with plugin architecture, multi-session handling, dan custom command pipelines built on Baileys-MD.</p>
+              </div>
+            </div>
+            <div class="fw-featured-tags">
+              <span class="fw-tag">Baileys-MD</span>
+              <span class="fw-tag">Plugin Arch</span>
+              <span class="fw-tag">Multi-Session</span>
+              <span class="fw-tag">Auto-Reconnect</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ── Tier 2: Core Stack ── -->
+      <div class="fw-skills-tier" data-tier="core">
+        <div class="fw-tier-label">
+          <span class="fw-tier-num">02</span>
+          <span class="fw-tier-name">Core Stack</span>
+          <span class="fw-tier-line"></span>
+        </div>
+
+        <div class="fw-tier-grid-core">
+          <article class="fw-skill-core">
+            <div class="fw-core-icon fw-core-icon-duo" style="background:rgba(227,79,38,0.12);">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML5" draggable="false">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS3" draggable="false">
+            </div>
+            <h4>HTML &amp; CSS</h4>
+            <p>Semantic markup, modern layout systems, animations.</p>
+          </article>
+
+          <article class="fw-skill-core">
+            <div class="fw-core-icon" style="background:rgba(240,219,79,0.12);">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" draggable="false">
+            </div>
+            <h4>JavaScript</h4>
+            <p>Vanilla JS, async patterns, DOM, modules, ES2024+.</p>
+          </article>
+
+          <article class="fw-skill-core">
+            <div class="fw-core-icon" style="background:rgba(68,136,62,0.15);">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" draggable="false">
+            </div>
+            <h4>Node.js</h4>
+            <p>REST APIs, middleware, auth flows, integrations.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- ── Tier 3: Toolkit ── -->
+      <div class="fw-skills-tier" data-tier="toolkit">
+        <div class="fw-tier-label">
+          <span class="fw-tier-num">03</span>
+          <span class="fw-tier-name">Toolkit</span>
+          <span class="fw-tier-line"></span>
+        </div>
+
+        <div class="fw-tier-grid-toolkit">
+          <div class="fw-skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" alt="Figma" draggable="false">
+            <span>Figma</span>
+          </div>
+          <div class="fw-skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="MongoDB" draggable="false">
+            <span>MongoDB</span>
+          </div>
+          <div class="fw-skill-chip">
+            <i class="fab fa-github"></i>
+            <span>Git / GitHub</span>
+          </div>
+          <div class="fw-skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="Linux" draggable="false">
+            <span>Linux / CLI</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  <!-- ── /SKILLS ── -->
+
+<!-- ══════════════════ PROJECTS ══════════════════ -->
+<section id="projects" class="fw-proj-section">
+  <!-- Data source: JS reads this JSON & renders scene -->
+  <script type="application/json" id="proj-data">
+  [
+    {
+      "title": "Azbry REST API",
+      "desc": "Public REST API service powering bots & apps. Scalable endpoints, minimal dependency on paid APIs.",
+      "tags": ["Node.js", "TypeScript", "REST API"],
+      "url": "https://api.azbry.com",
+      "thumb": "assets/img/projects/sswebapi.jpg",
+      "bg": "assets/img/projects/api.jpg",
+      "thumbFit": "cover",
+      "cta": { "icon": "fas fa-book-open", "label": "View Docs" }
+    },
+    {
+      "title": "Azbry Marketplace",
+      "desc": "Central marketplace for bot services, digital products, and developer tools under Azbry ecosystem.",
+      "tags": ["Next.js", "Marketplace", "Payment"],
+      "url": "https://azbry.com",
+      "thumb": "assets/img/projects/sswebstore.jpg",
+      "bg": "assets/img/projects/store.jpg",
+      "thumbFit": "contain",
+      "cta": { "icon": "fas fa-store", "label": "Visit Site" }
+    },
+    {
+      "title": "Azbry-MD",
+      "desc": "Modular WhatsApp bot built on Baileys MD. Plugin system, scalable architecture, and production-ready flow.",
+      "tags": ["Node.js", "Baileys", "WhatsApp"],
+      "url": "https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe?mode=gi_t",
+      "thumb": "assets/img/projects/menuazbry.jpg",
+      "bg": "assets/img/projects/menuazbry.jpg",
+      "thumbFit": "cover",
+      "cta": { "icon": "fab fa-whatsapp", "label": "Join Group" }
+    },
+    {
+      "title": "Wesker-MD",
+      "desc": "Advanced WhatsApp bot framework with Native Flow system, object-based plugins, and strict validation pipeline.",
+      "tags": ["Framework", "Native Flow", "Automation"],
+      "url": "https://github.com/vandebry10-star",
+      "thumb": "assets/img/projects/wesker.jpg",
+      "bg": "assets/img/projects/wesker.jpg",
+      "thumbFit": "cover",
+      "cta": { "icon": "fab fa-github", "label": "View Repo" }
+    },
+    {
+      "title": "Jadibot WhatsApp",
+      "desc": "Multi-session WhatsApp bot service. Currently under maintenance, service will return soon.",
+      "tags": ["Multi Device", "WhatsApp"],
+      "url": "#",
+      "thumb": "assets/img/projects/jadibot.jpg",
+      "bg": "assets/img/projects/jadibot.jpg",
+      "thumbFit": "cover",
+      "offline": true,
+      "cta": { "icon": "fas fa-tools", "label": "Under Maintenance" }
+    }
+  ]
+  </script>
+  <!-- Scene gets injected here by projects.js -->
+</section>
+<!-- ── /PROJECTS ── -->
+
+  
+  <!-- ══════════════════ CONTACT ══════════════════ -->
+  <section id="contact" class="fw-contact-section">
+    <div class="fw-contact-pin" id="contact-pin">
+      <div class="fw-contact-deco-num" aria-hidden="true">04</div>
+      <div class="fw-contact-anchor" aria-hidden="true"></div>
+      <div class="fw-contact-container">
+
+        <div class="fw-section-label fw-contact-label">
+          <i class="fas fa-envelope"></i> Contact
+          <span class="fw-contact-label-sep"></span>
+          <span class="fw-contact-label-sub">Get In Touch</span>
+        </div>
+
+        <h2 class="fw-contact-title">
+          Let's build <em>something</em>
+          <br>that ships.
+        </h2>
+
+        <p class="fw-contact-intro">
+          Need a website, landing page, or WhatsApp bot?
+          Drop a message via any channel below.
+        </p>
+
+        <div class="fw-contact-grid">
+          <div class="fw-contact-card" onclick="window.open('https://github.com/vandebry10-star','_blank')">
+            <div class="fw-contact-icon" style="background:#24292e;"><i class="fab fa-github"></i></div>
+            <div><div class="fw-contact-label">GitHub</div><div class="fw-contact-value">FebryWeskerV2</div></div>
+            <div class="fw-contact-arrow">→</div>
+          </div>
+          <div class="fw-contact-card" onclick="window.location.href='mailto:febrywesker@azbry.com'">
+            <div class="fw-contact-icon" style="background:linear-gradient(135deg,#ea4335,#c62828);"><i class="fas fa-envelope"></i></div>
+            <div><div class="fw-contact-label">Email</div><div class="fw-contact-value">febrywesker@azbry.com</div></div>
+            <div class="fw-contact-arrow">→</div>
+          </div>
+          <div class="fw-contact-card" onclick="window.open('https://febry.is-a.dev','_blank')">
+            <div class="fw-contact-icon" style="background:linear-gradient(135deg,#7c3aed,#2563eb);"><i class="fas fa-globe"></i></div>
+            <div><div class="fw-contact-label">Portfolio</div><div class="fw-contact-value">febry.is-a.dev</div></div>
+            <div class="fw-contact-arrow">→</div>
+          </div>
+          <div class="fw-contact-card" onclick="window.open('https://chat.whatsapp.com/CYa5CRl8K1lAK4NNCYmHJe','_blank')">
+            <div class="fw-contact-icon" style="background:#128c7e;"><i class="fab fa-whatsapp"></i></div>
+            <div><div class="fw-contact-label">WhatsApp</div><div class="fw-contact-value">Azbry-MD Community</div></div>
+            <div class="fw-contact-arrow">→</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ── /CONTACT ── -->
+
+  <!-- FOOTER -->
+  <footer class="fw-footer">
+    <div class="fw-footer-inner">
+      <div class="fw-footer-brand">FebryWesker</div>
+      <div class="fw-footer-copy">© 2026 FebryWesker · All rights reserved</div>
+      <div class="fw-footer-tagline">Ideas dont build themselves.</div>
+    </div>
+  </footer>
+
+  <button class="fw-back-top" id="back-top" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script type="module" src="js/main.js?v=35"></script>
+</body>
+</html>
