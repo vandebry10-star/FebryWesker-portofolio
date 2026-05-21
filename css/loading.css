@@ -1,178 +1,120 @@
 /* ════════════════════════════════════════════
-   loading.css v6.0 — Name-centric loader
-   Loader menyatu dengan hero via FLIP handoff.
-   Tidak ada venetian blinds; cuma fade halus.
+   loading.css : minimal counter + curtain
    ════════════════════════════════════════════ */
 
 #fw-loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background-color: #06030f; /* match body bg supaya crossfade seamless */
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+.fw-loader-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  padding: 28px 32px;
+  gap: 16px;
+}
+
+.fw-loader-tl,
+.fw-loader-tr,
+.fw-loader-bl,
+.fw-loader-br {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.fw-loader-tl {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.fw-loader-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--text);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 10px;
+}
+.fw-loader-line {
+  width: 24px;
+  height: 1px;
+  background: var(--text-3);
+}
+.fw-loader-meta { color: var(--text-2); }
+
+.fw-loader-tr {
+  text-align: right;
+}
+
+.fw-loader-bl { align-self: end; }
+.fw-loader-br { align-self: end; text-align: right; }
+
+/* Center counter — dominant alive object */
+.fw-loader-counter {
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  transition: background-color 0.6s ease, opacity 0.6s ease;
+  gap: 10px;
+  color: var(--text);
+}
+.fw-loader-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(120px, 22vw, 280px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+.fw-loader-pct {
+  font-family: var(--font-mono);
+  font-size: clamp(20px, 2.4vw, 32px);
+  font-weight: 600;
+  align-self: flex-start;
+  margin-top: 0.6em;
+  color: var(--text-3);
 }
 
-#fw-loader.is-bg-out {
-  background-color: transparent;
-}
-#fw-loader.is-bg-out::before,
-#fw-loader.is-bg-out::after {
-  opacity: 0 !important;
-}
-
-/* Subtle grid texture */
-#fw-loader::before {
-  content: '';
+/* Curtain exit */
+.fw-loader-curtain {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background: var(--bg);
+  transform: translateY(0);
+  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
   pointer-events: none;
-  transition: opacity 0.5s ease;
-}
-
-/* Center radial glow */
-#fw-loader::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 620px; height: 620px;
-  background: radial-gradient(circle, rgba(109,40,217,0.18) 0%, rgba(37,99,235,0.06) 45%, transparent 70%);
-  pointer-events: none;
-  animation: loaderGlow 3.5s ease-in-out infinite alternate;
-  transition: opacity 0.5s ease;
-}
-
-@keyframes loaderGlow {
-  from { opacity: 0.55; transform: translate(-50%,-50%) scale(0.9); }
-  to   { opacity: 1;    transform: translate(-50%,-50%) scale(1.1); }
-}
-
-/* Chrome fade: bg decorations + tagline + progress exit dgn animasi.
-   Animasi ditulis ulang di sini dengan keyframes baru supaya menang
-   lawan `animation: fw-fadeIn forwards` di entrance (forwards mengunci
-   opacity di 1 dan akan override regular opacity rule). */
-#fw-loader.is-chrome-fade::before,
-#fw-loader.is-chrome-fade::after {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#fw-loader.is-chrome-fade .fw-load-tagline {
-  pointer-events: none;
-  animation: fwLoadExitUp 0.45s cubic-bezier(0.55, 0, 0.5, 1) forwards;
-}
-
-#fw-loader.is-chrome-fade .fw-load-progress {
-  pointer-events: none;
-  transform-origin: center;
-  animation: fwLoadProgExit 0.55s cubic-bezier(0.6, 0.05, 0.4, 1) forwards;
-}
-
-@keyframes fwLoadExitUp {
-  0%   { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-14px); }
-}
-
-@keyframes fwLoadProgExit {
-  0%   { opacity: 1; transform: scaleX(1); }
-  60%  { opacity: 0.8; transform: scaleX(0.45); }
-  100% { opacity: 0; transform: scaleX(0); }
-}
-
-/* ── Inner wrapper ── */
-.fw-loader-inner {
-  position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
-
-/* ── Name (target FLIP src) ──
-   Pakai font-display yang sama dengan hero (Fraunces) supaya FLIP morph
-   smooth: cuma size + position yang berubah, tidak ada font swap. */
-.fw-load-name {
-  font-family: var(--font-display, 'Fraunces', serif);
-  font-weight: 900;
-  font-size: clamp(38px, 9vw, 84px);
-  letter-spacing: -0.04em;
-  line-height: 1.08;
-  background: linear-gradient(135deg, #c4b5fd 0%, #93c5fd 50%, #f9a8d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 18px;
-  overflow: hidden;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.fw-load-char {
-  display: inline-block;
+#fw-loader.is-exit .fw-loader-grid {
   opacity: 0;
-  transform: translateY(52px) rotate(6deg);
-  animation: loadCharIn 0.55s cubic-bezier(0.34, 1.45, 0.64, 1) forwards;
-  /* inline-block bikin parent background-clip:text ga propagate.
-     Setiap char butuh gradient + clip sendiri. Match hero --grad-text
-     supaya FLIP landing → hero name swap invisible. */
-  background: linear-gradient(135deg, #c4b5fd 0%, #93c5fd 50%, #f9a8d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  transition: opacity 0.35s ease;
+}
+#fw-loader.is-exit .fw-loader-curtain {
+  transform: translateY(-101%);
 }
 
-@keyframes loadCharIn {
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(0deg);
-  }
-}
-
-/* ── Tagline ── */
-.fw-load-tagline {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.28);
-  opacity: 0;
-  animation: fw-fadeIn 0.6s ease-out 1.3s forwards;
-  margin-bottom: 22px;
-  transition: opacity 0.3s ease;
-}
-
-/* ── Progress line tipis (underline) ── */
-.fw-load-progress {
-  width: 180px;
-  height: 1.5px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 99px;
-  overflow: hidden;
-  opacity: 0;
-  animation: fw-fadeIn 0.5s ease-out 1.5s forwards;
-  transition: opacity 0.3s ease;
-}
-
-.fw-load-progress-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, #a78bfa 0%, #818cf8 50%, #67e8f9 100%);
-  box-shadow: 0 0 8px rgba(139,92,246,0.55);
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 0.18s linear;
-}
-
-@keyframes fw-fadeIn {
-  to { opacity: 1; }
+@media (max-width: 520px) {
+  .fw-loader-grid { padding: 20px 18px; }
+  .fw-loader-meta { display: none; }
+  .fw-loader-tl { gap: 8px; }
+  .fw-loader-line { width: 14px; }
+  .fw-loader-tl, .fw-loader-tr, .fw-loader-bl, .fw-loader-br { font-size: 10px; }
+  .fw-loader-pct { font-size: 14px; }
 }

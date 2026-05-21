@@ -1,0 +1,36 @@
+/* ════════════════════════════════════════════
+   cursor.css : minimal dot follower
+   Only active on pointer:fine devices.
+   ════════════════════════════════════════════ */
+
+@media (hover: hover) and (pointer: fine) {
+  .fw-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate3d(-50px, -50px, 0);
+    mix-blend-mode: difference;
+    opacity: 0;
+    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease;
+    will-change: transform;
+  }
+  .fw-cursor.is-active {
+    opacity: 1;
+  }
+  .fw-cursor.is-hover {
+    width: 36px;
+    height: 36px;
+  }
+  /* Hide native cursor only when ours is ready */
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button {
+    cursor: none;
+  }
+}

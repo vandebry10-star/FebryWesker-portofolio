@@ -1,0 +1,150 @@
+/* ════════════════════════════════════════════
+   chapter.css : burnt-sienna interstitial + marquee
+   ════════════════════════════════════════════ */
+
+.fw-chapter {
+  position: relative;
+  background: var(--bg-chapter);
+  color: var(--text-on-dark);
+  min-height: 80vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+}
+
+.fw-chapter-inner {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+  padding: 64px 56px 32px;
+  max-width: 1480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ── Meta top ── */
+.fw-chapter-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.65);
+}
+.fw-chapter-meta-num {
+  color: rgba(244, 239, 230, 0.85);
+}
+.fw-chapter-meta-label {
+  color: var(--text-on-dark);
+}
+
+/* ── Jumbo display ── */
+.fw-chapter-display {
+  align-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.28em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(72px, 14vw, 220px);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--text-on-dark);
+  margin: 0;
+}
+.fw-chapter-word {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1;
+}
+.fw-chapter-word-inner {
+  display: inline-block;
+  will-change: transform;
+}
+.fw-chapter-display em {
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(244, 239, 230, 0.78);
+}
+
+/* ── Meta bottom ── */
+.fw-chapter-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.55);
+  border-top: 1px solid rgba(244, 239, 230, 0.18);
+  padding-top: 14px;
+}
+
+/* ── Marquee band ── */
+.fw-chapter-marquee {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid rgba(244, 239, 230, 0.18);
+  border-bottom: 1px solid rgba(244, 239, 230, 0.18);
+  padding: 18px 0;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.12);
+}
+.fw-chapter-marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(32px, 4.8vw, 64px);
+  letter-spacing: -0.02em;
+  color: var(--text-on-dark);
+  will-change: transform;
+}
+.fw-chapter-marquee-item {
+  display: inline-block;
+}
+.fw-chapter-marquee-dot {
+  display: inline-block;
+  font-size: 0.6em;
+  color: rgba(244, 239, 230, 0.55);
+  font-style: normal;
+}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .fw-chapter-inner {
+    padding: 48px 28px 24px;
+    gap: 18px;
+  }
+  .fw-chapter-meta,
+  .fw-chapter-foot {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+  .fw-chapter-display {
+    font-size: clamp(56px, 16vw, 120px);
+  }
+  .fw-chapter-marquee-track {
+    font-size: clamp(28px, 8vw, 44px);
+  }
+}
+
+@media (max-width: 600px) {
+  .fw-chapter-inner {
+    padding: 36px 18px 18px;
+  }
+  .fw-chapter-foot {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

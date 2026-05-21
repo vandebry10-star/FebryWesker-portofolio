@@ -1,13 +1,16 @@
 /**
- * projects.js v7: Stacked thumbnail cards
+ * projects.js : per-project pin + 65/35 split
  *
- * Pelajaran v6: src swap di satu <img> bikin lag karena walaupun cached,
- * browser tetap re-decode tiap kali. Plus animasi gsap overlap pas
- * scroll cepet.
+ * Architecture (kept from v7):
+ *   - Preload all thumbs, render N <img> stacked, toggle .is-active opacity
+ *     so switching projects costs nothing (no re-decode, no load).
+ *   - One ScrollTrigger pin with budget = (N-1) * 100vh.
+ *   - onUpdate maps progress 0..1 → integer index → switchTo().
  *
- * v7: render N <img> elements stacked di DOM dari awal. Semua udah
- * loaded + decoded di-browser. Switch = cuma toggle opacity, gak ada
- * load delay sama sekali, gak ada re-decode. Card-style.
+ * Visual (Phase 6):
+ *   - Cream editorial, no scanlines / deco-num / glow.
+ *   - Left 65 %: huge muted number, per-word title reveal, copy, CTA.
+ *   - Right 35 %: static thumbnail, no zoom motion.
  */
 
 export function initProjects() {
@@ -31,11 +34,11 @@ export function initProjects() {
   }
   if (!projects.length) return;
 
-  // Preload paralel semua thumb. Karena semua bakal di-render stacked di DOM,
-  // browser akan otomatis decode + cache. Cuma tunggu yang pertama doang
-  // supaya hero render gak nunggu kelar semua.
-  preload(projects.map((p) => p.thumb).filter(Boolean))
-    .then(() => render(section, projects));
+  // Render markup synchronously so projects pinSpacer exists by the time
+  // main.js calls ScrollTrigger.refresh(). Preload runs in the background
+  // just to warm the browser image cache.
+  render(section, projects);
+  preload(projects.map((p) => p.thumb).filter(Boolean));
 }
 
 function preload(urls) {
@@ -56,27 +59,20 @@ function render(section, projects) {
 
   const total = projects.length;
   const totalStr = String(total).padStart(2, '0');
-  const now = new Date().getFullYear();
 
   section.insertAdjacentHTML('beforeend', `
     <div class="fw-proj-sticky">
 
-      <div class="fw-proj-grid-bg"></div>
-      <div class="fw-proj-deco-num">03</div>
-      <div class="fw-proj-anchor"></div>
-      <div class="fw-proj-scanline"></div>
+      <span class="fw-proj-ghost" id="proj-ghost" aria-hidden="true">selected</span>
 
       <div class="fw-proj-meta">
         <div class="fw-proj-meta-left">
-          <span class="fw-proj-status"><span class="fw-proj-status-dot"></span> Live Reel</span>
-          <span class="fw-proj-meta-dot"></span>
-          <span>Selected Work</span>
-          <span class="fw-proj-meta-dot"></span>
-          <span>${now}</span>
+          <span class="fw-proj-meta-num">(03)</span>
+          <span class="fw-proj-meta-label">Selected Work</span>
         </div>
         <div class="fw-proj-meta-right">
           <span id="proj-count">01</span>
-          <span class="fw-proj-meta-dot"></span>
+          <span class="fw-proj-meta-sep">/</span>
           <span>${totalStr}</span>
         </div>
       </div>
@@ -93,24 +89,14 @@ function render(section, projects) {
         </div>
 
         <div class="fw-proj-right">
-          <div class="fw-proj-frame">
-            <span class="fw-proj-frame-corner tl"></span>
-            <span class="fw-proj-frame-corner tr"></span>
-            <span class="fw-proj-frame-corner bl"></span>
-            <span class="fw-proj-frame-corner br"></span>
-            <span class="fw-proj-frame-coord tl">N 36.18 / E 122.74</span>
-            <span class="fw-proj-frame-coord br">CASE / ${totalStr}</span>
-
-            <div class="fw-proj-thumb" id="proj-thumb">
-              <span class="fw-proj-offline-badge">Offline</span>
-              ${projects.map((p, i) => `
-                <img class="fw-proj-thumb-img${p.thumbFit === 'contain' ? ' is-fit-contain' : ''}${i === 0 ? ' is-active' : ''}"
-                     data-i="${i}"
-                     src="${p.thumb}"
-                     alt="${escapeHtml(p.title)}">
-              `).join('')}
-              <div class="fw-proj-thumb-fade"></div>
-            </div>
+          <div class="fw-proj-thumb" id="proj-thumb">
+            <span class="fw-proj-offline-badge">Offline</span>
+            ${projects.map((p, i) => `
+              <img class="fw-proj-thumb-img${p.thumbFit === 'contain' ? ' is-fit-contain' : ''}${i === 0 ? ' is-active' : ''}"
+                   data-i="${i}"
+                   src="${p.thumb}"
+                   alt="${escapeHtml(p.title)}">
+            `).join('')}
           </div>
         </div>
       </div>
@@ -119,26 +105,20 @@ function render(section, projects) {
         ${projects.map((_, i) => `<div class="fw-proj-dot ${i === 0 ? 'is-active' : ''}" data-i="${i}"></div>`).join('')}
       </div>
 
-      <div class="fw-proj-hint">scroll to explore ↓</div>
     </div>
   `);
 
-  // Minimal CTA di luar section: cuma satu link ke GitHub
-  const moreHTML = `
+  section.insertAdjacentHTML('afterend', `
     <div class="fw-proj-more">
-      <a href="https://github.com/vandebry10-star" target="_blank" rel="noopener"
-         class="fw-proj-more-link">
-        <span class="fw-proj-more-link-bracket">[</span>
-        <i class="fab fa-github"></i>
-        <span class="fw-proj-more-link-text">View more on GitHub</span>
-        <i class="fas fa-arrow-right fw-proj-more-link-arrow"></i>
-        <span class="fw-proj-more-link-bracket">]</span>
+      <a href="https://github.com/vandebry10-star" target="_blank" rel="noopener" class="fw-proj-more-link">
+        <span>View more on GitHub</span>
+        <span class="fw-proj-more-arrow">&rarr;</span>
       </a>
     </div>
-  `;
-  section.insertAdjacentHTML('afterend', moreHTML);
+  `);
 
   const sticky = section.querySelector('.fw-proj-sticky');
+  const ghost  = section.querySelector('#proj-ghost');
 
   const refs = {
     count:     document.getElementById('proj-count'),
@@ -154,9 +134,10 @@ function render(section, projects) {
 
   paint(projects[0], refs);
 
-  // GSAP pin: stay pinned selama (N-1) * 100vh scroll.
-  // onUpdate hitung index dari progress (0..1) lalu trigger switch.
   let current = 0;
+
+  if (ghost) ghost.style.transform = 'translate3d(15%, 0, 0)';
+
   ST.create({
     trigger: section,
     start: 'top top',
@@ -166,7 +147,6 @@ function render(section, projects) {
     anticipatePin: 1,
     invalidateOnRefresh: true,
     onUpdate: (self) => {
-      // progress = 0 di project 0, progress = 1 di project N-1
       const raw = self.progress * (total - 1);
       const idx = Math.min(total - 1, Math.max(0, Math.round(raw)));
       if (idx !== current) {
@@ -174,11 +154,14 @@ function render(section, projects) {
         current = idx;
         switchTo(projects[idx], idx, prev, refs);
       }
+      if (ghost) {
+        // 15% → -32% across the full pin (4 transitions for 5 projects)
+        const xp = 15 + self.progress * -47;
+        ghost.style.transform = `translate3d(${xp}%, 0, 0)`;
+      }
     },
   });
 
-  // Refresh setelah render selesai supaya posisi pin akurat.
-  // Penting karena render() dipanggil async setelah preload.
   ST.refresh();
 }
 
@@ -188,13 +171,14 @@ function paint(p, refs) {
   refs.title.innerHTML     = wrapWords(p.title);
   refs.desc.textContent    = p.desc;
   refs.tags.innerHTML      = p.tags.map((t) => `<span class="fw-proj-tag">${t}</span>`).join('');
-  refs.cta.innerHTML       = `<i class="${p.cta.icon}"></i> ${p.cta.label}`;
+  refs.cta.innerHTML       = `<span>${escapeHtml(p.cta.label)}</span><span class="fw-proj-cta-arrow">&rarr;</span>`;
   refs.cta.href            = p.url;
   refs.thumb.classList.toggle('is-offline', !!p.offline);
   refs.cta.classList.toggle('fw-proj-cta--disabled', !!p.offline);
 }
 
 function switchTo(p, idx, prev, refs) {
+  const gsap = window.gsap;
   const numStr = String(idx + 1).padStart(2, '0');
   const fwd    = idx > prev;
 
@@ -205,7 +189,7 @@ function switchTo(p, idx, prev, refs) {
     ease: 'power3.in',
     overwrite: true,
     onComplete: () => {
-      refs.num.textContent = numStr;
+      refs.num.textContent   = numStr;
       refs.count.textContent = numStr;
       gsap.fromTo(refs.num,
         { yPercent: fwd ? 100 : -100, opacity: 0 },
@@ -240,7 +224,7 @@ function switchTo(p, idx, prev, refs) {
     onComplete: () => {
       refs.desc.textContent = p.desc;
       refs.tags.innerHTML   = p.tags.map((t) => `<span class="fw-proj-tag">${t}</span>`).join('');
-      refs.cta.innerHTML    = `<i class="${p.cta.icon}"></i> ${p.cta.label}`;
+      refs.cta.innerHTML    = `<span>${escapeHtml(p.cta.label)}</span><span class="fw-proj-cta-arrow">&rarr;</span>`;
       refs.cta.href         = p.url;
       refs.cta.classList.toggle('fw-proj-cta--disabled', !!p.offline);
       gsap.fromTo([refs.desc, refs.tags, refs.cta],
@@ -250,8 +234,6 @@ function switchTo(p, idx, prev, refs) {
     },
   });
 
-  // Stacked card switch: toggle .is-active class, CSS handle opacity transisi.
-  // Semua img udah loaded di DOM, gak ada delay sama sekali.
   refs.thumbImgs.forEach((img, i) => {
     img.classList.toggle('is-active', i === idx);
   });
