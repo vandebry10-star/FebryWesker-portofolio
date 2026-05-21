@@ -1,120 +1,219 @@
 /* ════════════════════════════════════════════
-   loading.css : minimal counter + curtain
+   loading.css : editorial dark loader (obys-inspired)
+
+   Layout : top brand/status, center masked display, bottom tagline+progress / counter.
+   Exit   : clip-path inset 50% (split apart from horizontal midline)
+            + content fade.
    ════════════════════════════════════════════ */
 
 #fw-loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg-dark);
+  color: var(--text-on-dark);
   overflow: hidden;
-  transition: opacity 0.5s ease;
+  clip-path: inset(0% 0% 0% 0%);
+  transition: clip-path 0.95s cubic-bezier(0.76, 0, 0.24, 1);
+}
+#fw-loader.is-exit {
+  clip-path: inset(50% 0% 50% 0%);
 }
 
-.fw-loader-grid {
+.fw-loader-shell {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto 1fr auto;
-  padding: 28px 32px;
-  gap: 16px;
+  padding: 32px 40px;
+  gap: 24px;
+  transition: opacity 0.4s ease;
 }
+#fw-loader.is-exit .fw-loader-shell { opacity: 0; }
 
-.fw-loader-tl,
-.fw-loader-tr,
-.fw-loader-bl,
-.fw-loader-br {
+/* ── decorative split line at the midpoint, drawn just before split ── */
+#fw-loader::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(244, 239, 230, 0.22);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform 0.55s var(--ease-out-expo);
+  pointer-events: none;
+}
+#fw-loader.is-exit::after { transform: scaleX(1); }
+
+/* ════════════ TOP ROW ════════════ */
+.fw-loader-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-3);
+  color: var(--text-on-dark-3);
+  opacity: 0;
+  animation: loaderFadeIn 0.7s 0.05s var(--ease-out-expo) forwards;
 }
-
-.fw-loader-tl {
+.fw-loader-brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 .fw-loader-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--text);
+  width: 30px; height: 30px;
+  border: 1px solid var(--text-on-dark);
   border-radius: 6px;
-  color: var(--text);
+  color: var(--text-on-dark);
   font-size: 10px;
 }
-.fw-loader-line {
-  width: 24px;
-  height: 1px;
-  background: var(--text-3);
-}
-.fw-loader-meta { color: var(--text-2); }
+.fw-loader-brand-text { color: var(--text-on-dark-2); }
 
-.fw-loader-tr {
-  text-align: right;
-}
-
-.fw-loader-bl { align-self: end; }
-.fw-loader-br { align-self: end; text-align: right; }
-
-/* Center counter — dominant alive object */
-.fw-loader-counter {
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
-  display: flex;
+.fw-loader-status {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
-  color: var(--text);
+  color: var(--text-on-dark-2);
 }
-.fw-loader-num {
+.fw-loader-status-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+/* ════════════ MASKED DISPLAY ════════════ */
+.fw-loader-display {
+  align-self: center;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(120px, 22vw, 280px);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(96px, 22vw, 340px);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--text-on-dark);
+}
+.fw-loader-line {
+  display: block;
+  overflow: hidden;
+  line-height: 0.95;
+}
+.fw-loader-line-inner {
+  display: block;
+  transform: translateY(105%);
+  will-change: transform;
+  animation: loaderLineUp 1s var(--ease-out-expo) forwards;
+}
+.fw-loader-line:nth-child(1) .fw-loader-line-inner { animation-delay: 0.18s; }
+.fw-loader-line:nth-child(2) .fw-loader-line-inner { animation-delay: 0.32s; }
+.fw-loader-line em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-on-dark-2);
+}
+
+/* ════════════ BOTTOM ROW ════════════ */
+.fw-loader-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  opacity: 0;
+  animation: loaderFadeIn 0.7s 0.42s var(--ease-out-expo) forwards;
+}
+.fw-loader-bottom-l {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  min-width: 0;
+  max-width: 480px;
+}
+.fw-loader-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-3);
+}
+.fw-loader-progress {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: var(--border-on-dark);
+  overflow: hidden;
+}
+.fw-loader-progress-bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: var(--text-on-dark);
+}
+
+.fw-loader-counter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
+  line-height: 1;
+  color: var(--text-on-dark);
 }
-.fw-loader-pct {
-  font-family: var(--font-mono);
-  font-size: clamp(20px, 2.4vw, 32px);
+.fw-loader-num {
+  font-size: clamp(56px, 8vw, 96px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-on-dark);
+}
+.fw-loader-num-sep,
+.fw-loader-num-total {
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--text-on-dark-3);
   font-weight: 600;
-  align-self: flex-start;
-  margin-top: 0.6em;
-  color: var(--text-3);
 }
 
-/* Curtain exit */
-.fw-loader-curtain {
-  position: absolute;
-  inset: 0;
-  background: var(--bg);
-  transform: translateY(0);
-  transition: transform 0.85s cubic-bezier(0.76, 0, 0.24, 1);
-  pointer-events: none;
-  z-index: 2;
+/* ════════════ KEYFRAMES ════════════ */
+@keyframes loaderLineUp {
+  to { transform: translateY(0); }
 }
-#fw-loader.is-exit .fw-loader-grid {
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-#fw-loader.is-exit .fw-loader-curtain {
-  transform: translateY(-101%);
+@keyframes loaderFadeIn {
+  to { opacity: 1; }
 }
 
-@media (max-width: 520px) {
-  .fw-loader-grid { padding: 20px 18px; }
-  .fw-loader-meta { display: none; }
-  .fw-loader-tl { gap: 8px; }
-  .fw-loader-line { width: 14px; }
-  .fw-loader-tl, .fw-loader-tr, .fw-loader-bl, .fw-loader-br { font-size: 10px; }
-  .fw-loader-pct { font-size: 14px; }
+/* ════════════ RESPONSIVE ════════════ */
+@media (max-width: 640px) {
+  .fw-loader-shell {
+    padding: 22px 18px;
+    gap: 18px;
+  }
+  .fw-loader-brand-text { display: none; }
+  .fw-loader-display {
+    font-size: clamp(64px, 26vw, 200px);
+  }
+  .fw-loader-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .fw-loader-bottom-l {
+    max-width: none;
+    width: 100%;
+  }
+  .fw-loader-num { font-size: clamp(44px, 14vw, 80px); }
+}
+
+/* ════════════ REDUCED MOTION ════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .fw-loader-line-inner { animation: none; transform: translateY(0); }
+  .fw-loader-top,
+  .fw-loader-bottom { animation: none; opacity: 1; }
 }
