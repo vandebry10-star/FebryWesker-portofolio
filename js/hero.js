@@ -51,16 +51,22 @@ function initHeroScrollOutro() {
   });
 
   if (lany) {
-    gsap.to(lany, {
-      opacity: 0.35,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: home,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.7,
-      },
-    });
+    // fromTo + immediateRender:false supaya GSAP tidak override CSS reveal
+    // (opacity 0 -> 1) sebelum user benar-benar scroll lewat trigger range.
+    gsap.fromTo(lany,
+      { opacity: 1 },
+      {
+        opacity: 0.35,
+        ease: 'none',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: home,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.7,
+        },
+      }
+    );
   }
 }
 
