@@ -14,6 +14,7 @@
 
 .fw-hero-wrap {
   position: relative;
+  z-index: 1;
   width: 100%;
   max-width: 1320px;
   margin: 0 auto;
@@ -21,6 +22,34 @@
   grid-template-rows: auto 1fr auto auto;
   gap: 36px;
   align-items: start;
+}
+
+/* ── background drift text ───────────────── */
+.fw-hero-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(140px, 28vw, 380px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: var(--text);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  opacity: 0;
+  animation: heroBgDrift 18s ease-in-out infinite;
+}
+@keyframes heroBgDrift {
+  0%   { transform: translate(-35%, -50%); opacity: 0; }
+  15%  { opacity: 0.06; }
+  85%  { opacity: 0.06; }
+  100% { transform: translate(25%, -50%); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fw-hero-bg-text { animation: none; opacity: 0.04; transform: translate(-5%, -50%); }
 }
 
 /* ── top meta row ─────────────────────────── */
